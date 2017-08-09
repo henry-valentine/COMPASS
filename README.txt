@@ -2,7 +2,9 @@
 	Author: Henry Valentine, Embry-Riddle Aernonautical University
 	Current Version: 0.9.1
 	Version Date: 12/12/2016
-	Copyright © 2016, Henry Valentine
+	Copyright © 2017, Henry Valentine
+	
+	(DEVELOPER README)
 	
 	PURPOSE:
 		- This program simulates light interactions with 3D satellite models and calculates brightness levels as perceived
@@ -38,52 +40,71 @@
 		  "SLRA/res/data" directory and will not be lost on termination of the program.
 		  
 	FUTURE UPDATES:
-		- More research on Rendering equation and Genetic Algorithms*******
-    	- Fix SimObject Rotations 
-    		- Make more Realistic 
-    		- Euler rotation theorem
-    		- User rotation x,y,z to create a single axis
-			- Include option for rotational acceleration? (Probably not...)
+		- User Types in Satellite Number and program retrieves TLE from the internet. Or manualy enter the TLE elements
+			- Display Name for confirmation?
+			- Search by name?
+			- Maintain TLE database in program isntead of searching the Web each time?
+		- Save relevent TLE With Simulation Data
+		- Precalculate position, orientation, and brightness of satellite as fast as possible. Then allow it to be displayed to user.
+			- This Fixes Live Graph Scale Issue
+			- This allows you to scroll through the simulation time to any specific point.
+			- Save Initial Parameters of the simulation. Don't save all the data...
+		- Only model angular position of satellite. Don't model its change in altitude. You can adjust brightness values for that on its own when needed.
+		- Use SGP4 to propagate TLE's
+		- Save simulation and TLE data with Brightness data.
+			--> Allow simulations to be reloaded and run again. Use a slider to scan through the simulation?
+		- Maintain TLE database from the internet
+		- Add colors per-face to SATT files
+		- Add color to AMF converter
+		- Use Geometry Shader to create mesh?
+		- Use JavaFX LineChart
+		- Do I want Rotation Velocity in Degrees per second? Radians per Second? or Hertz?
+		- Remove Ambient lighting
+		- Get All Key Input From GUI or SIMULATION
+		- Fix Live Graph Bugs
+		- Move Behavior Assignment to independent Class?
+		- Test: Render white screen and make sure all brightness data is 1
+		- Live Graph Option --> Set Vertical Scale
+		- Save Simulation Configuration with SimData?
+		- Add Graph Options
+		- Clamp Brightness from 0 to 1 to make graphing easier?
+		- New Logo
+		- Change angle of Light (and angle of camera) depending on orbital paramters
+		- Change FileConverter class. Use single SATTObject instead of an array
+		- Independent color per face?
+		- If a part/satellite needs to be viewed by user, allow it to be opened with high ambient light.
+		- Update text header in GUI class
+		- Add textures to .SATT files?
+		- Create a .SATT reference document
+		- Text fields left blank, use default values (current rotation of object)
+		- Add specific classes for different types of materials for better reuse
+		- Implement Shadows
+		- Sphere mapping for reflectivity
+		- Revamp transform class to use all quaternion rotations
 		- Make light source size accurate.
 		- Edit shader programs (Remove ambient light and other stuff...)
-		- Fix SimObject Rotations --> Make more Realistic
-		- Add support for STL files
-		- print a "pause" message
-		- represent xRot, yRot... with vectors instead
-		- UI Error Messages - Pop-up boxes or printing somewhere
 		- Migrate Brightness calculations to Shader Program
-		- Add ChildObject class whose position and orientation are defined by a parent SimObject (In progress) 
-			- Add support for child objects in Simulation class (ArrayList with multiple objects)
 		- Apply genetic algorithms to derive orientation from a given light curve
 		- Create option to run and observe a single simulation, 
 		  or run multiple (without rendering them) based on a genetic algorithm
 		- Update shader to improve accuracy
 			- Render Objects casting shadows on themselves and other objects
 			- Assign specular intensity and power values to accurately model sunlight
-		- Change aspect ratio to immitate telescope?
-		- Change data collection interval to match telescope's?
 		- Update graphing utility
 			- Add graduations
 			- Add User Defined Graph Scale
 		- Make a "Save As" button. Choose whether to save or not after each sim (Default name is SimulationN) (Whatever number)
-		- Option to run a single simulation at a time or run algorithm given a light curve. 
-			- (Parameters for algorithm --> Save top x% of simulations, run to within x% of actual)
 		- User defined sample rate (data)interval --> Warnings for potential aliasing
 		- Add more error messages
 		- consider atmospheric effects
 		
-		Version 1.0
-			- Import brightness curve data and use a genetic algorithm, running multiple simulations to narrow in on the behavior and configuration
-			  of the real-world object.
-			- Run multiple simulations of the same angular positions and velocities and average results for better accuracy?? 
-		  Or create the option to do so... This would make the simulations take way longer
-		
-	UPDATE HISTORY:
+	VERSION HISTORY:
 		- 0.9.1 : Bug fixes. Code tidying. Updated angular velocity input units to Hertz (revolutions per second)
 		- 0.9.0 : Initial export. Simulations created one at a time and rendered in a separate window. Graphing Utilities implemented.
 		
 	KNOWN BUGS:
 		- Using the Escape key to end a simulation prevents a new one from being created [RESOLVED : 0.9.1]
+		- ChildObject Translations are not consistent with the orientation of the parent object. [RESOLVED : 0.9.2]
 	
 	EXTERNAL LIBRARIES:
 		**See Respective Websites for Licensing Agreements**
@@ -101,9 +122,12 @@
 	FURTHER READING:
 		- Rendering Equation - http://x86.cs.duke.edu/courses/cps124/fall09/notes/16_rendering/p143-kajiya.pdf
 		- Euler's Theorem - http://vmm.math.uci.edu/PalaisPapers/EulerFPT.pdf
+		- Passing colors straight throug a shader http://stackoverflow.com/questions/2740874/how-do-i-get-the-current-color-of-a-fragment
 	
 	NOTES:
 		- Program Documentation is included in the SLRA/doc directory (javadoc and UML)
+		- Use mesh generating program such as point wise on all parts for better lighting accuracy
+		- Object rotations occur about the origin of the model (the point 0,0,0 in the same coordinate system which defines each vertex)
 	
 	SOFTWARE LICENSE EXTENSION:
 		- No rights reserved as of or prior to the 12/12/2016 release of this software. (Version 0.9.1)

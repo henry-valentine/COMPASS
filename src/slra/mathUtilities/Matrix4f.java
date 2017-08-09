@@ -49,6 +49,16 @@ public class Matrix4f {
 	}//end initTranslation
 	
 	/**
+	 * Creates a translation matrix based on the given
+	 * translation vector values
+	 * @param Vector3f r : vector whose components represent the xyz translation of this object
+	 * @return this translation matrix
+	 */
+	public Matrix4f initTranslation(Vector3f r) {
+		return initTranslation(r.getX(), r.getY(), r.getZ());
+	}//end initTranslation
+	
+	/**
 	 * Initializes a rotation matrix based
 	 * on the altered up and forward vectors
 	 * of the translation 
@@ -62,6 +72,25 @@ public class Matrix4f {
 		Vector3f f = forward.normalize();
 		Vector3f u = up.normalize();
 		Vector3f r = f.cross(u).normalize();
+		
+		return initRotation(f, u, r);
+	}//end initRotation
+	
+	/**
+	 * Initializes a rotation matrix based
+	 * on the altered up and forward vectors
+	 * of the translation 
+	 * 	
+	 * @param up		: Up Direction
+	 * @param forward	: Forward Direction
+	 * @param right		: Right Direction
+	 * @return rotation matrix
+	 */
+	public Matrix4f initRotation(Vector3f forward, Vector3f up, Vector3f right) {
+		
+		Vector3f f = forward.normalize();
+		Vector3f u = up.normalize();
+		Vector3f r = right.normalize();
 		
 		//f u and r represent the three axes of the camera.
 		//moves the whole scene to align with what the camera should see

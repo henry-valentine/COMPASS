@@ -74,6 +74,7 @@ public class Mesh {
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		
 		// Establish the pointer for each Attribute in the vertex buffer //
+		//1st parameter. Where to start in vertex buffer. Same as layout (location = 0)
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);	//Vertex positions
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12);	//Vertex Texture Mapping Coordinates 
 		glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE * 4, 20);	//Vertex Normals
@@ -107,14 +108,9 @@ public class Mesh {
 			
 			//effectively averages the normals of each vertex based on the index
 			//creates an average normal from all the faces that a vertex belongs to
-			vertices[i0].setNormal(vertices[i0].getNormal().add(normal));
-			vertices[i1].setNormal(vertices[i1].getNormal().add(normal));
-			vertices[i2].setNormal(vertices[i2].getNormal().add(normal));
-		}
-		
-		//normalize the normals
-		for(int i = 0; i < vertices.length; i++) {
-			vertices[i].setNormal(vertices[i].getNormal().normalize());
+			vertices[i0].setNormal(vertices[i0].getNormal().add(normal).normalize());
+			vertices[i1].setNormal(vertices[i1].getNormal().add(normal).normalize());
+			vertices[i2].setNormal(vertices[i2].getNormal().add(normal).normalize());
 		}
 	}//end calcNormals	
 }//end class

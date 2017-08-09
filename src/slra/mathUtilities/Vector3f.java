@@ -58,18 +58,8 @@ public class Vector3f {
 	 *  @param axis  : 3D vector representing rotation axis
 	 *  @return this vector after applying the rotation
 	 */
-	public Vector3f rotate(float angle, Vector3f axis) {
-		
-		float sinHalfAngle = (float) Math.sin(Math.toRadians(angle / 2));
-		float cosHalfAngle = (float) Math.cos(Math.toRadians(angle / 2));
-		
-		// Quaternion Components //
-		float rx = axis.getX() * sinHalfAngle;
-		float ry = axis.getY() * sinHalfAngle;
-		float rz = axis.getZ() * sinHalfAngle;
-		float rw = cosHalfAngle;
-		
-		Quaternion rotation = new Quaternion(rx, ry, rz, rw);
+	public Vector3f rotate(Vector3f axis, float angle) {
+		Quaternion rotation = new Quaternion().initRotation(axis, angle);
 		
 		Quaternion conjugate = rotation.conjugate();
 		
@@ -94,9 +84,11 @@ public class Vector3f {
 		
 		float length = length();
 		
-		x /= length;
-		y /= length;
-		z /= length;
+		if(length != 0) {//check for 0 vector
+			x /= length;
+			y /= length;
+			z /= length;
+		}
 		
 		return this;
 	}//end normalize
@@ -200,7 +192,19 @@ public class Vector3f {
 		return new Vector3f(x * r, y * r, z * r);
 	}//end multiply
 	
+	/**
+	 * Returns a String Representation
+	 * of this Vector
+	 */
+	public String toString() {
+		return "(" + x + ", " + y + ", " + z + ")";
+	}//end toString
+	
 	//* Getters and Setters *//
+	public void set(float x, float y, float z) {
+		this.x = x; this.y = y; this.z = z;
+	}
+	
 	public float getX() {
 		return x;
 	}

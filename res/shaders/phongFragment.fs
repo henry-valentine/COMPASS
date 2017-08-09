@@ -2,7 +2,7 @@
 
 /**
  * Fragment Shader
- * Takes in vertex data then interpolates calculations over every pixel on the face... I think
+ * Takes in vertex data then interpolates calculations over every pixel on the face
  */
  
 in vec2 texCoord0;

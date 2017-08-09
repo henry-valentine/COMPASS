@@ -1,0 +1,183 @@
+************************************* Satellite Light Reflection Analyzer *************************************
+=====================================           Code Change Log           =====================================
+
+This Document provides a log of all changes made to the program since the first date represented within the log.
+All changes are dated and listed chronologically. The class modified is listed first followed by a colon and the
+type of modification made followed by details on the modification. The results/consequences of the modification
+are indicated by an arrow (-->) and appear indented on the lines below the modification.
+
+KEY:
+	BUG 		= Discovered issue with Program. Statement provides details. RESOLVED or NOT RESOLVED
+	TEMPORARY 	= Temporary Change to the code. If returned to normal --> (CHANGE REVERTED). Else --> TODO:
+	ADDED 		= New code implemented in the program. Statement provides details. 
+	REMOVED		= Methods or Attributes removed from the given class.
+	TEST		= Test performed on the program. Statement describes test. --> Result
+	MOD			= Modification to the program. Statement describes modification.
+	NOTE		= This may be appended to any modification keyword and signifies extra information.
+
+CURRENT VERSION: 0.9.1	
+
+VERSION: 0.9.1
+1/21/2017
+	- ChildObject:		Class Created
+	- LittleTeapot:		Class Created
+	- Simulation: 		TEMPORARY: Added child SimObject --> CHANGE REVERTED
+	- ChildObject: 		ADDED: relRot to childObject Rotation
+	- Vector3f: 		ADDED: toString method
+	- Simulation:		TEMPORARY: Changed child projected matrix to that of object --> CHANGE REVERTED
+								   NOTE: This Change Corrects ChildObject Coordinate issues, 
+										 but the object uses parent transfomration
+1/23/2017
+	- ChildObject: 		BUG: updateTranslation method - Vectors not modifying object position correctly 
+						     --> [RESOLVED]
+	- Transform: 		TEST: Negated Forward Vector in getForward method to see if tranlsation problems would be corrected 
+							  --> FAIL
+	- Transform:		MOD: setRotation method - Negated Forward Vector components. 
+							 --> Correct x axis rotation issues	
+							 --> Created Z axis rotation issue.
+	- Transform:		TEST: Tried forwardXup and upXforward to see if z axis rotation isssues stopped 
+							  --> No Effect On Issue
+	- Transform:		MOD: setRotation method - vector r changed to ForwardXUp to remain consistent with RHR
+	- ChildObject:		MOD: Changed relRightPos vector to ForwardXUp to remain consistent with RHR
+1/24/2017
+	- Transform:		TEST: Multiply Vector r by -1 to see if z axis rotation issue resolved. 
+							  --> No Effect on Issue
+	- Transform:		TEST: Multiply forward vector by -1 in the z rotation method.
+							  --> Reverses direction of rotation for both the parent AND the child object
+	- ChildObject:		REMOVED: Removed everything in the updateTranslation/Rotation/Scale methods and used those
+							 methods to set the translation, rotation, and scale
+	- Transform:		ADDED: Added a SimObject instance variable representing the parent of this transformation
+	- Transform:		MOD: Added a new constructor/parameters to existing constructors to accept a SimObject
+	- Transform:		MOD/BUG: getTransformation method - New Matrix that represents the parent transformation.
+								 Return statement - Multiply the transfromation matrix by that of the parent. If no
+								 parent exists, the parent transform matrix is initialized to the identity matrix.
+								 --> This stopped the childObject from rendering, or at lest showing up in the frame.
+								 --> RESOLVED BUG - ChildObject's translation was inside the parent object so it wasn't visible
+	- Transform:		TEST: getTransformation method - set if statement to always false so the parent matrix is never
+							  multiplied by to see if the childObject would render.
+							  --> ChildObject does render (PASS)
+1/25/2017
+	- LittleTeapot:		TEST: Set relative scale to 1 and relative position to 0,0,0 to see if childObject would be rendered
+							  --> Object was rendered (PASSED)
+	- ChildObject:		BUG: ChildObject appears slightly transparent [RESOLVED]
+	- RenderUtil:		TEST: Set glFrontFace(GL_CW) to GL_CWW to see if transparency would be effected
+							  --> Transparency goes away for child object, but begins for parent object
+	- LittleTeapot		TEST: Changed object mesh to Cube mesh to see if it was an issue with the model
+							  --> Transparency still occured. Problem with the code not the model.
+	- Simulation:		TEMPORARY: render method - added a call to glFrontFace(GL_CW); before the cube and 
+								   glFrontFace(GL_CCW); before the child object.
+								   --> Fixes Culling Issues with Parent and Child Object. Need to resolve this issue still!
+1/26/2017
+	- SimObject:		ADDED: Added children SimObject arraylist instance variable
+	- SimObject:		ADDED: Added addChildren method
+	- SimObject:		ADDED: Added addChild method
+	- SimObject:		ADDED: Added updateTransform method
+	- TestBlock:		Class Created
+	- SimObject:		REMOVED: Removed updateTransform method
+	- ObjectID:			Enum Created. Fixed Associated SimObject Class Errors
+	- SimObject:		REMOVED: Removed Abstract modifier from SimObject class and all abstract methods within the class.
+	- Transform:		ADDED: Added new Constructors.
+	- SimObject:		MOD: Populated formerly abstract methods.
+	- GUI:				TEMPORARY: Run method. Creating cube produces a TestBlock object instead.
+	- Simulation: 		REMOVED: Removed Temporary Child object
+	- Transform:		ADDED: Added setScale(float scale) method
+	- SimObject:		MOD: update and render methods call the same methods for the child objects of an object
+	- SimObject:		MOD: render method - render method now takes a Shader argument from the simulation class 
+							 to update uniforms for each object
+	- SimObject:		MOD: update method - Updates rotation of parent and updates all child objects of an object
+	- SimObject:		BUG: Child Objects are not retaining their initial rotations. [RESOLVED]
+							 Rotation Vector in Object's transformation is correct --> Rotation is not being applied.
+							 --> Rotation instance variable was being set, but setRotation method was not being called.
+	- ChildObject:		Class Deleted
+	- LittleTeapot:		Class Deleted
+	
+3/4/2017
+	- Util:				MOD: Changed formatOBJ method name to formatLine. Changed in ResourceLoader as well.
+	- ResourceLoader:	ADDED: Created readLineOBJ method to use loadMesh for multiple file types.
+	- ResourceLoader:	ADDED: Added readLineSTL method
+	- Util:				MOD: Altered/simplified formatLine method to work with STL and OBJ files
+	
+3/8/2017
+	- Mesh:				MOD: calcNormals - normalized vectors as they are created instead of doing it separately.
+	
+3/12/2017:
+	- FileConverter:	Class Created
+	- Material:			ADDED: Added "id" field to material. Modified constructors to account for this and added getter/
+	- FileConverter:	ADDED: Created writeSATT method. SATT files created and formatted correctly.
+
+3/13/2017:
+	- SimObject:		MOD: Replaced ObjectID id with String id. Removed ObjectID Enum. Adjusted object classes accordingly
+	- ObjectID:			Enum Deleted
+	- FileConverter:	REMOVED: Removed FormatLine method (Use the one in the Util clas instead)
+	- Util:				MOD: formatLine method now takes a line as a single string and splits and formats it. Made appropriate adjustments in other classes
+	- Util:				ADDED: hasData method. Checks if a line in a text file has valuable information or if it is a comment/empty array
+	- SimObject:		ADDED: root attribute. Allows invisible SimObjects to be created and used as the root for a satellite model comprised of various parts.
+
+3/14/2017:
+	- Util:				BUG/MOD: hasData method was not working properly. True/False returns were flip flopped. Switched them back.
+	- ResourceLoader:	ADDED: loadSat method. Loads SimObjects from a .SATT file to run in a simulation.
+	- Util:				REMOVED: removeEmptyStrings method. (Job is taken vare of by formatLine)
+	- Simulation:		TEST: Set object variable in Simulation class to an object directly loaded from a .SATT file. SUCCESS
+							BUG: Object appears, but is not affected by altering the transformation of the object
+								--> Child Object does not recognize that it has a parent object. Parent recognizes that it has a child.
+								--> REASON: The parent of a child object's TRANFORMATION must be set explicitly 
+								--> [RESOLVED] Altered addChild methods in  SimObject class. (see line 129)
+							BUG: Rotations do not work for any object (Regardless of loading method) [RESOLVED] --> Normal Objects did not have root component (SATT models still broken)
+
+3/15/2017
+	- Transform:		ADDED: SetParent method
+	- SimObject:		MOD: addChild methods now set the child's transformation parent as the object adding the child.
+	- FileConverter:	MOD: convertAMF method now functional.
+
+3/24/2017
+	- GUI:				MOD: Started GUI Revamp. Changed window sized. Moved/Added buttons. Created Console.
+	- GUI:				ADDED: Print method to print to GUI console
+
+3/25/2017
+	- GUI:				MOD: Continued GUI Revamp. Added More buttons and Live Graph
+	- Help:				Class Created
+	- Simulation:		MOD: Moved saveData method to GUI class so same Data Points can be used in live garph
+	- Graph:			BUG: Strange data points appearing... Getting random 0's in time data whe manually change sample rate
+							--> RESOLVED: Needed to reset datapoint in gui, concurent simulations added on to eachother
+	- GUI:				ADDED: Live Graphing Utility
+	- GUI:				MOD: Moved RetrieveData method to Graph Class
+	- GUI:				REMOVED: simulations HashMap
+3/26/2017
+	- GUI:				MOD: Fixed Inverted Graphing. 
+						MOD: Implemented AddSat Button
+						MOD: Press Enter to Run Sim
+						MOD: Update Object ComboBox When new models added
+						
+3/27/2017
+	- Objects Package Deleted
+	- Transform:		MOD: Revamped Rotation System
+	- GUI:				MOD: Revamped Rotation System
+	- SimObject:		MOD: Revamped Rotation System
+	- Quaternion:		MOD: Revamped Rotation System
+	- Vector3f:			MOD: Revamped Rotation System
+	- Simulation:		MOD: Revamped Rotation System
+	
+3/30/17
+	- Vector3f:			MOD: Changed normalize vector to check for 0 vector so it doesn't try to divide by 0
+							--> Fixed the model stretching Bug.
+	- GUI:				MOD: Some GUI Changes
+	
+4/8/17
+	- FileConverter:	MOD: Changed convertAMF method so there is no error when a part has a name with a space in it	
+	
+	CURRENT TODO: 
+			  - Creating Normals adjusts .SATT file? Make File adjustable thorugh the program. (e.g. Normals, Materials, Names, Init transformations...) 
+			  - Delete LoadMesh method in ResourceLoader
+			  - Refine the hasData method
+			  - Use a single SATTObject in FileCOnverter instead of a whole array?
+			  - Make Simulation Window in Front of GUI at all times
+			  - Continue Adding Console Messages
+			  
+			  BUG: Angular Velocity not behaving correctly. increasing Axis paramters changes rotation speed. Check vector normalization.
+					FIX ROTATION PROBLEMS
+					
+			  - Implement the orbital motion of the satellite
+			  - Add Orekit info to README https://www.orekit.org/
+			  
+			Read through this website more -> https://learnopengl.com/#!Advanced-Lighting/Shadows/Shadow-Mapping
+***************************************************************************************************************

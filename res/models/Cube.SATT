@@ -1,0 +1,57 @@
+# SATELLITE LIGHT REFLECTION ANALYZER V0.9.1
+# SATTELITE MODELLING FORMAT
+# TITLE: CUBE.SATT
+# DATE CREATED: 2017/03/27
+
+satt {
+    id Cube
+    object {
+        id DEFAULT
+        transform {
+            translation 0.0 0.0 0.0
+            rotation 0.0 0.0 0.0 1.0
+            scale 1.0 
+        }
+        part {
+            id DEFAULT
+            transform {
+                translation 0.0 0.0 0.0
+                rotation 0.0 0.0 0.0 1.0
+                scale 1.0 
+            }
+            material {
+                id DEFAULT
+                color 0.0 1.0 1.0
+                specInt 2.0
+                specPow 32.0
+            }
+            vertices {
+                v 2.0 2.0 -2.0
+                v -2.0 2.0 -2.0
+                v 2.0 2.0 2.0
+                v -2.0 2.0 2.0
+                v 2.0 -2.0 -2.0
+                v 2.0 -2.0 2.0
+                v -2.0 -2.0 -2.0
+                v -2.0 -2.0 2.0
+            }
+            indices {
+                i 0 1 2
+                i 2 1 3
+                i 4 5 6
+                i 6 5 7
+                i 5 2 7
+                i 7 2 3
+                i 6 7 1
+                i 1 7 3
+                i 6 1 4
+                i 4 1 0
+                i 5 4 2
+                i 2 4 0
+            }
+            normals {
+                # NORMAL DATA NOT AVAILABLE
+            }
+        }
+    }
+}

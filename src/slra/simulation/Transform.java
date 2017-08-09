@@ -1,7 +1,9 @@
 package slra.simulation;
 
 import slra.mathUtilities.Matrix4f;
+import slra.mathUtilities.Quaternion;
 import slra.mathUtilities.Vector3f;
+import slra.simObjects.utilities.SimObject;
 
 /**
  * Transform Class
@@ -26,38 +28,64 @@ public class Transform {
 	
 	// Transformation Vectors //
 	private Vector3f translation;	//Translation Vector
-	private Vector3f rotation;		//x,y,z rotation values
+	private Quaternion rotation;	//x,y,z rotation values
 	private Vector3f scale;			//x,y,z scale factors
 	
-	// Orientation Vectors //
-	private Vector3f up, forward; 					//Current Up and Forward Directions of the Object
-	private final Vector3f UP_AXIS, FORWARD_AXIS;	//
+	// Parent Object //
+	private SimObject parent;
 	
 	////* Constructors *////
 	/**
+	 * Creates a new Transform Object
+	 * With the given translation, rotation,
+	 * and scale and the given parent object.
+	 * @param translation : Object Translation
+	 * @param rotation	  : Object Rotation
+	 * @param scale		  : Object Scale
+	 * @param parent	  : Parent Object
+	 */
+	public Transform(Vector3f translation, Quaternion rotation, float scale, SimObject parent) {
+		this(new Vector3f(0, 1, 0), new Vector3f(0, 0, 1), parent);
+		this.translation = translation;
+		setRotation(rotation);
+		this.scale = new Vector3f(scale, scale, scale);
+	}//end constructor
+	
+	/**
 	 * Creates a new Transform object
-	 * and initializes the translation,
-	 * rotation, and scale vectors to 0
-	 * @param upAxis 		: The direction of the objects "Up" Axis
-	 * @param forwardAxis	: The direction of the objects "Forward" Axis
+	 * with the given translation, rotation
+	 * and scale.
+	 * @param translation : Object Translation
+	 * @param rotation	  : Object Rotation
+	 * @param scale		  : Object Scale
+	 */
+	public Transform(Vector3f translation, Quaternion rotation, float scale) {
+		this(translation, rotation, scale, null);
+	}//end Constructor
+	
+	/**
+	 * TODO: REMOVE THIS CONSTRUCTOR
+	 */
+	public Transform(Vector3f upAxis, Vector3f forwardAxis, SimObject parent) {
+		translation = scale = new Vector3f(0,0,0);
+		rotation = new Quaternion(0,0,0,1);
+	}//end constructor
+	
+	/**
+	 * TODO: REMOVE THIS CONSTRUCTOR
 	 */
 	public Transform(Vector3f upAxis, Vector3f forwardAxis) {
-		translation = rotation = scale = new Vector3f(0,0,0);
-		this.UP_AXIS = upAxis.normalize();
-		this.FORWARD_AXIS = forwardAxis.normalize();
-		
-		up = new Vector3f(0, 0, 0);			//Initialize up to default
-		forward = new Vector3f(0, 0, 0);	//Initialize forward to default
-		
-		// Set up to the Up Axis //
-		up.setX(this.UP_AXIS.getX());
-		up.setY(this.UP_AXIS.getY());
-		up.setZ(this.UP_AXIS.getZ());
-		
-		// Set forward to the Forward Axis //
-		forward.setX(this.FORWARD_AXIS.getX());
-		forward.setY(this.FORWARD_AXIS.getY());
-		forward.setZ(this.FORWARD_AXIS.getZ());
+		this(upAxis, forwardAxis, null);
+	}//end constructor
+	
+	/**
+	 * Creates a new Transform object with default
+	 * up and forward axes. This object is bound to
+	 * the parent object provided.
+	 * @param parent - Parent object of this object
+	 */
+	public Transform(SimObject parent) {
+		this(new Vector3f(0, 1, 0), new Vector3f(0, 0, 1), parent);
 	}//end constructor
 	
 	/**
@@ -65,7 +93,7 @@ public class Transform {
 	 * using default up and forward axes
 	 */
 	public Transform() {
-		this(new Vector3f(0, 1, 0), new Vector3f(0, 0, 1));
+		this(new Vector3f(0, 1, 0), new Vector3f(0, 0, 1), null);
 	}//end Constructor
 	
 	////* Methods *////
@@ -78,10 +106,19 @@ public class Transform {
 	 */
 	public Matrix4f getTransformation() {
 		Matrix4f translationMatrix = new Matrix4f().initTranslation(translation.getX(), translation.getY(), translation.getZ());	//Translation Matrix
-		Matrix4f rotationMatrix = new Matrix4f().initRotation(forward, up);															//Rotation Matrix
+		Matrix4f rotationMatrix = rotation.toRotationMatrix();																		//Rotation Matrix
 		Matrix4f scaleMatrix = new Matrix4f().initScale(scale.getX(), scale.getY(), scale.getZ());									//Scale Matrix
 		
-		return translationMatrix.multiply(rotationMatrix.multiply(scaleMatrix));//Order of multiplication matters!
+		Matrix4f parentMatrix;
+		
+		if(parent != null) {
+			parentMatrix = parent.getTransform().getTransformation();//MOVE TO INSTANCE VARIABLE AND SET TO IDENTITY IN CONSTRUCTOR	 
+		} 
+		else {
+			parentMatrix = new Matrix4f().initIdentity();
+		}
+		
+		return parentMatrix.multiply(translationMatrix.multiply(rotationMatrix.multiply(scaleMatrix)));//Order of multiplication matters!
 	}//end getTransformation													 
 	
 	/**
@@ -130,34 +167,16 @@ public class Transform {
 		this.translation = new Vector3f(x, y, z);
 	}
 	
-	public Vector3f getRotation() {
+	public Quaternion getRotation() {
 		return rotation;
 	}
 	
-	/* Change this! Use x,y,z to create a single rotation
-	 * axis and apply quaternion rotations to the up
-	 * and forward vectors */
-	public void setRotation(Vector3f rotation) {
-		up.setX(UP_AXIS.getX());
-		up.setY(UP_AXIS.getY());
-		up.setZ(UP_AXIS.getZ());
-		
-		forward.setX(FORWARD_AXIS.getX());
-		forward.setY(FORWARD_AXIS.getY());
-		forward.setZ(FORWARD_AXIS.getZ());
-		
-		Vector3f r = forward.cross(up).normalize();
-		
-		up.rotate(rotation.getX(), r).normalize();
-		forward.rotate(rotation.getX(), r).normalize();
-	
-		//Rotate Up about z and Forward about y
-		up.rotate(rotation.getZ(), forward).normalize();
-		forward.rotate(rotation.getY(), up).normalize();
+	public void setRotation(Quaternion rotation) {
+		this.rotation = rotation;
 	}
 	
-	public void setRotation(float x, float y, float z) {
-		setRotation(new Vector3f(x, y, z));
+	public void setRotation(float x, float y, float z, float w) {
+		setRotation(new Quaternion(x, y, z, w));
 	}
 	
 	public Vector3f getScale() {
@@ -172,6 +191,17 @@ public class Transform {
 		this.scale = new Vector3f(x, y, z);
 	}
 	
+	public void setScale(float scale) {
+		this.scale = new Vector3f(scale, scale, scale);
+	}
+	
+	public SimObject getParent() {
+		return parent;
+	}
+	
+	public void setParent(SimObject parent) {
+		this.parent = parent;
+	}
 	public static Camera getCamera() {
 		return camera;
 	}

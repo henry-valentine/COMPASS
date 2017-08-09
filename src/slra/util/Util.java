@@ -93,48 +93,41 @@ public class Util {
 	}//end createFlippedBuffer
 	
 	/**
-	 * Removes all leading and trailing white spaces from all 
-	 * elements in a given String array.
-	 * 
-	 * @param tokens : String array to be modified
-	 * @return A new String [] with no leading or trailing empty spaces
+	 * Checks whether a line in a text file has
+	 * meaningful data or is a comment/is empty
+	 * @param tokens - String [] of line to be checked
+	 * @return true if this line has meaningful information
 	 */
-	public static String [] removeEmptyStrings(String [] tokens) {//removes blank spaces from string array
-		for(int i = 0; i < tokens.length; i++) {
-			tokens[i] = tokens[i].trim();
-		}
-		return tokens;	
-	}//end removeEmptyStrings
+	public static boolean hasData(String [] tokens) {
+		if(tokens.length == 0 || tokens[0].equals("#") || tokens[0].equals(""))
+			return false;
+		else 
+			return true;
+	}//end hasData
 	
 	/**
-	 * Formats String [] from OBJ file
-	 * @param tokens : individual lines of the obj file
-	 * @return 
+	 * Formats line from text file and stores in an array
+	 * Removes white spaces and forward slashes
+	 * @param tokens : individual lines of the OBJ or STL file
+	 * @return Formated tokens
 	 */
-	public static String [] formatOBJ(String [] tokens) {
-		for(int i = 0; i < tokens.length; i++) {
-			tokens[i] = tokens[i].trim();
-			
-			/* Remove Empty Strings*/
-			if(tokens[i].isEmpty()){
-				String [] temp = new String [tokens.length - 1];
-				
-				for(int j = 0; j < temp.length; j++) {
-					if(j < i) temp[j] = tokens[j];
-					else temp[j] = tokens[j + 1];
-				}
-				tokens = temp;
-				
-				if(tokens.length == 0) return tokens;
+	public static String [] formatLine(String line) {
+		String [] tokens = line.split(" ");
+		ArrayList<String> tokens_ = new ArrayList<String>();
+		//Convert to an ArrayList
+		for(String tok : tokens) {
+			//Remove White Spaces
+			tok = tok.trim();
+			//Removes Empty Tokens
+			if(tok.isEmpty()) {
+				continue;
 			}
 			
-			
-			if(tokens[i].contains("/")){ //removes slashes from face values
-				tokens[i] = tokens[i].substring(0, tokens[i].indexOf("/"));
-			}
+			//Add to ArrayList
+			tokens_.add(tok);//
 		}
-		return tokens;	
-	}
+		return tokens_.toArray(new String [tokens_.size()]);
+	}//end formatLine
 	
 	/**
 	 * Converts an Integer ArrayList into an int array

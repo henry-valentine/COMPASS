@@ -1,8 +1,6 @@
 package slra.util;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.*;
-
 import slra.mathUtilities.Vector3f;
 /**
  * Rendering Utilities
@@ -49,9 +47,10 @@ public class RenderUtil {
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);	//clearColor set to 0 b/c space....
 		
 		glFrontFace(GL_CW);		//clockwise order of vertices defines the front of a face
-		glCullFace(GL_BACK);	//Doesn't draw on back face
 		glEnable(GL_CULL_FACE);	//normally draws the same thing on either side of a face. If you don't want the second face you cull it
+		glCullFace(GL_BACK);	//Doesn't draw on back face
 		glEnable(GL_DEPTH_TEST);
+		
 		glEnable(GL_TEXTURE_2D);
 	}//end initGraphics
 }//end class

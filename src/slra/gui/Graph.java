@@ -1,6 +1,10 @@
 package slra.gui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -26,7 +30,8 @@ public class Graph {
 	////* Instance Variables *////
 	private ArrayList<Point2f> points;	//Graph Points
 	private Pane pane;					//Window Pane
-			
+	private GUI gui;
+	
 	private final int WIDTH = 400;		//Window Width
 	private final int HEIGHT = 400;		//Window Height
 	
@@ -35,9 +40,10 @@ public class Graph {
 	 * Constructor - Initializes Graph Points and window settings.
 	 * @param points - Points to be graphed
 	 */
-	public Graph(String title, ArrayList<Point2f> points) {
+	public Graph(String title, GUI gui) {
 		//Initialize Instance Variables
-		this.points = points;
+		this.gui = gui;
+		points = retrieveData("res/data/" + title + ".txt");
 		
 		//Create Pane
 		pane = new Pane();
@@ -58,6 +64,45 @@ public class Graph {
 		stage.getIcons().add(new Image("file:res/images/SatLogo.png"));
 		stage.show();
 	}//end Graph
+	
+	/**
+	 * Loads Data From the Given Simulation File
+	 * @param path : Path of the simulation to read data from
+	 * @return Point2f ArrayList of data points
+	 */
+	public ArrayList<Point2f> retrieveData(String path) {
+		// Get Simulation Data File //
+		File inFile = new File(path);
+		Scanner input = null;
+		ArrayList<Point2f> data = new ArrayList<Point2f>();
+		
+		try {
+			input = new Scanner(inFile);
+		} catch (FileNotFoundException e) {
+			System.err.println("Could not locate file: " + path);
+			gui.print("Could not locate file: " + path);
+			e.printStackTrace();
+		}
+		// Read in Data //
+		if(input != null) {
+			try {
+				while(input.hasNext()) {
+					float p1 = Float.parseFloat(input.next());
+					float p2 = Float.parseFloat(input.next());
+					data.add(new Point2f(p1, p2));
+					}
+				System.out.println("Data Loaded From: " + path);
+				gui.print("Data Loaded From: " + path);
+			} catch(Exception e) {
+				System.err.println("WARNING: POSSIBLE DATA CORRUPTION");
+				gui.print("WARNING: POSSIBLE DATA CORRUPTION");
+				System.err.println("File: " + path + " may not be formatted correctly");
+				gui.print("File: " + path + " may not be formatted correctly");
+			}
+			input.close();//Close Scanner
+		}
+		return data;
+	}//end retrieveData
 	
 	/**
 	 * Takes Point data from instance variables
@@ -93,7 +138,7 @@ public class Graph {
 			
 			// Scale Data //
 			points.get(i).setX(points.get(i).getX() * WIDTH / maxTime);
-			points.get(i).setY((points.get(i).getY() - minBright) * HEIGHT / (maxBright - minBright));
+			points.get(i).setY(HEIGHT - ((points.get(i).getY() - minBright) * HEIGHT / (maxBright - minBright)));//Subtract From Height b/c coordinates are inverted
 			
 			// Create Point //
 			Circle tempPoint = new Circle();

@@ -1,13 +1,30 @@
 package slra.simulation;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
+import static org.lwjgl.glfw.GLFW.GLFW_DECORATED;
+import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
+import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.opengl.GL.createCapabilities;
+import static org.lwjgl.opengl.GL11.GL_CW;
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_RGB;
+import static org.lwjgl.opengl.GL11.glFrontFace;
+import static org.lwjgl.opengl.GL11.glReadPixels;
 
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL.*;
+import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.system.MemoryUtil;
 
 import slra.gui.GUI;
 import slra.lighting.BaseLight;
@@ -18,9 +35,6 @@ import slra.mathUtilities.Point2f;
 import slra.mathUtilities.Vector3f;
 import slra.simObjects.utilities.SimObject;
 import slra.util.RenderUtil;
-
-import org.lwjgl.glfw.GLFWKeyCallback;
-import org.lwjgl.system.MemoryUtil;
 
 /**
  * Simulation Class
@@ -42,24 +56,27 @@ public class Simulation implements Runnable {
 	public boolean paused;							//Whether simulation is paused or not
 	private Shader shader;							//Shader for this simulation
 	
+	@SuppressWarnings("unused")
 	private GLFWKeyCallback keyCallback;			//Key Handler
 	private KeyHandler keyHandler;					//Key Handler
 	
-	private ArrayList<Point2f> dataPoints;			//Brightness Data
-	public static final int DATA_INTERVAL = 200;	//Data Collection Interval in milliseconds
+	public final int DATA_INTERVAL;	//Data Collection Interval in milliseconds
 	
 	////* Constructor *////
 	/**
 	 * Creates a new SLRA Simulation
 	 * @param passDuration : Duration of the pass (i.e. simulation time) in seconds
 	 */
-	public Simulation(int passDuration, GUI gui) {
+	public Simulation(int passDuration, GUI gui, int sampleRate) {
+		DATA_INTERVAL = (int)((1 / (double)sampleRate) * 1000.0);
+		System.out.println("Data Interval: " + DATA_INTERVAL);
 		windowInit();
 		init();
 		this.gui = gui;
 		gui.setRunning(true);	//Prevents Concurrent Simulations
 		this.passDuration = passDuration;
 		System.out.println("----- Simulation Initialized -----");
+		gui.print("----- Simulation Initialized -----");
 	}//end Constructor
 	
 	////* Methods *////
@@ -74,45 +91,11 @@ public class Simulation implements Runnable {
 	 * @param yVel 	 : Angular Velocity about y axis
 	 * @param zVel 	 : Angular Velocity about z axis
 	 */
-	public void addObject(SimObject object, float xRot, float yRot, float zRot, float xVel, float yVel, float zVel) {
+	public void addObject(SimObject object, Vector3f rAxis, float rAngle, Vector3f vAxis, float vAngle) {
 		this.object = object;
-		
-		object.setxRot(xRot);
-		object.setyRot(yRot);
-		object.setzRot(zRot);
-		object.setxVel(xVel);
-		object.setyVel(yVel);
-		object.setzVel(zVel);
+		this.object.setRot(rAxis.normalize(), rAngle);
+		this.object.setVel(vAxis.normalize(), vAngle);
 	}//end setObject
-	
-	/**
-	 * Saves the Current Brightness Data as a text
-	 * file in the data sub-directory
-	 */
-	public void saveData() {
-		// Create File Name and Path //
-		String path = "res/data/";
-		path += "Simulation" + (gui.getSimulationList().size() + 1) + ".txt";
-		
-		// Create File //
-		File dataFile = new File(path);
-		
-		try {
-			FileWriter fr = new FileWriter(dataFile);
-			
-			// Write Data To File //
-			for(Point2f point : dataPoints) {
-				fr.write(point.getX() + " " + point.getY() + "\n");
-			}
-			fr.close();
-			System.out.println("DATA SAVED: " + path);
-			
-		} catch (IOException e) {
-			System.err.println("WARNING: FAILED TO SAVE SIMULATION DATA");
-		}
-		gui.clearSimulations();//clear simulations so files are not show more than once
-		gui.loadSimulations();//Updates ComboBox in GUI
-	}//end saveData
 	
 	/**
 	 * Returns the brightness of the entire scene.
@@ -126,9 +109,9 @@ public class Simulation implements Runnable {
 		float bSum = 0;
 		
 		for(int i = 0; i < pixels.length; i += 3) {
-			bSum += (.333 * pixels[i] + .333 * pixels[i+1] + .333 * pixels[i + 2]) / 255;//calculations for brightness (actual, not perceived)
+			bSum += ((1.0/3) * pixels[i] + (1.0/3) * pixels[i+1] + (1.0/3) * pixels[i + 2]) / 255;//calculations for brightness (actual, not perceived)
 		}
-		return bSum;
+		return bSum / (WIDTH * HEIGHT);//Clamps from 0 to 1
 	}//end getBrightness
 	
 	/** Updates the current SimObject */
@@ -139,13 +122,14 @@ public class Simulation implements Runnable {
 	/** Renders the current SimObject */
 	private void render() {
 		// Clears depth buffer too so it doesn't overwrite itself and produce a black screen //
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		RenderUtil.clearScreen();
 		
 		shader.bind();//bind the shader to this context
-		
+
+		glFrontFace(GL_CW);//TEMP TEMP TEMP FIX!
 		// Update Uniforms in Shader for light calculations //
-		shader.updateUniforms(object.getTransform().getTransformation(), object.getTransform().getProjectedTransformation(), object.getMaterial());
-		object.render();
+		object.render(shader);
+		
 	}//end render
 	
 	/**
@@ -156,6 +140,7 @@ public class Simulation implements Runnable {
 	public void run() {
 		
 		System.out.println("Simulation Running...");
+		gui.print("Simulation Running...");
 		
 		double lastTime = System.currentTimeMillis();
 		float elapsedTime = 0;
@@ -163,7 +148,8 @@ public class Simulation implements Runnable {
 		// First Data Point //
 		update();	//Might be a better way to get the first point...
 		render();
-		dataPoints.add(new Point2f(elapsedTime, getBrightness()));
+		gui.addPoint(new Point2f(elapsedTime, getBrightness()));
+		gui.graph();
 		
 		// Run Simulation //
 		while(running) {
@@ -177,12 +163,15 @@ public class Simulation implements Runnable {
 				if(!paused) {
 					//Update Objects //
 					update();
-				
+							
+					glfwSetWindowPos(windowID, gui.getX() + 180, gui.getY() + 32);//TEMP TEMP TEMP
+					
 					// Collect Brightness Data //
 					double delta = System.currentTimeMillis() - lastTime;
 					if(delta >= DATA_INTERVAL) {
 						elapsedTime += delta;
-						dataPoints.add(new Point2f(elapsedTime, getBrightness()));
+						gui.addPoint(new Point2f(elapsedTime, getBrightness()));
+						gui.graph();
 						lastTime = System.currentTimeMillis();
 					}
 				}
@@ -197,7 +186,7 @@ public class Simulation implements Runnable {
 			// End Simulation and Save //
 			if (!running) {
 				// Save Data //
-				saveData();
+				gui.saveData();
 			}
 
 			// Render Objects //
@@ -218,8 +207,6 @@ public class Simulation implements Runnable {
 		
 		running = true;							//Simulation is now Running
 		paused = false;							//Initialize to "not paused"
-		
-		dataPoints = new ArrayList<Point2f>(); 	//Initialize dataPoints for this Simulation
 		
 		camera = new Camera();					//Initialize Camera
 		
@@ -242,18 +229,23 @@ public class Simulation implements Runnable {
 		
 		// Initialize GLFW //
 		if (!glfwInit()) {
-			System.err.println("GLFW Failed to Initialize...");
+			System.err.println("GLFW FAILED TO INITIALIZE");
+			gui.print("ERROR: GLFW FAILED TO INITIALIZE");
 		}
 		
 		// Set window Parameters //
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); 
+		glfwWindowHint(GLFW_DECORATED, GLFW_FALSE); // GETS RID OF BORDER
+		
 		
 		// Create Window //
 		windowID = glfwCreateWindow(WIDTH, HEIGHT, "Test3D", MemoryUtil.NULL, MemoryUtil.NULL);
+		glfwSetWindowPos(windowID, 100, 100);		// SET WINDOW LOCATION (UPDATE EACH CYCLE IN NEW GUI)
 		
 		// Check Window Initialization //
 		if(windowID == MemoryUtil.NULL) {
-			System.err.println("Window Failed to Initialize");
+			System.err.println("ERROR: WINDOW FAILED TO INITIALIZE");
+			gui.print("ERROR: WINDOW FAILED TO INITIALIZE");
 		}
 		
 		// Appends GLFW Context to this window //
@@ -275,6 +267,7 @@ public class Simulation implements Runnable {
 	/** Ends the current simulation */
 	public void terminate() {
 		System.out.println("----- Simulation Terminated -----\n");
+		gui.print("----- Simulation Terminated -----\n");
 		gui.setRunning(false);
 		glfwDestroyWindow(windowID);
 		glfwTerminate();

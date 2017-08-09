@@ -14,6 +14,7 @@ import slra.util.ResourceLoader;
 public class Material {
 	
 	/////* Instance Variables */////
+	private String id;					//Material ID
 	private Texture texture;			//Object Texture
 	private Vector3f color;				//Object Base Color
 	private float specularIntensity;	//Reflection intensity
@@ -28,11 +29,12 @@ public class Material {
 	 * @param specularIntensity	 : Reflection Intensity
 	 * @param specularPower		 : Reflection Width
 	 */
-	public Material(Texture texture, Vector3f color, float specularIntensity, float specularPower) {
+	public Material(Texture texture, Vector3f color, float specularIntensity, float specularPower, String id) {
 		this.texture = texture;
 		this.color = color;
 		this.specularIntensity = specularIntensity;
 		this.specularPower = specularPower;
+		this.id = id;
 	}//end constructor
 	
 	/**
@@ -42,7 +44,7 @@ public class Material {
 	 * @param color				 : Base Color of the Object
 	 */
 	public Material(Texture texture, Vector3f color) {
-		this(texture, color, 2, 32);//default values    Do research to calculate these factor for the project
+		this(texture, color, 2, 32, "DEFAULT");//default values    Do research to calculate these factor for the project
 	}//end constructor
 	
 	/**
@@ -110,5 +112,13 @@ public class Material {
 
 	public void setSpecularPower(float specularExponent) {
 		this.specularPower = specularExponent;
+	}
+	
+	public String getID() {
+		return id;
+	}
+	
+	public void setID(String id) {
+		this.id = id;
 	}
 }//end class

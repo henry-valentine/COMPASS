@@ -26,6 +26,30 @@ public class Quaternion {
 		this.w = w;
 	}//end constructor
 	
+	/** Default Rotation Quaternion **/
+	public Quaternion() {
+		this(0,0,0,1);
+	}
+	
+	/**
+	 * Initialize a rotation
+	 * @param axis	: Axis of rotation
+	 * @param angle : Amount of Rotation
+	 * @return Quaternion representing this rotation
+	 */
+	public Quaternion initRotation(Vector3f axis, float angle) {
+		float sinHalfAngle = (float) Math.sin(Math.toRadians(angle / 2));
+		float cosHalfAngle = (float) Math.cos(Math.toRadians(angle / 2));
+		
+		// Quaternion Components //
+		this.x = axis.getX() * sinHalfAngle;
+		this.y = axis.getY() * sinHalfAngle;
+		this.z = axis.getZ() * sinHalfAngle;
+		this.w = cosHalfAngle;
+		
+		return this;
+	}
+	
 	/**
 	 * Returns the length of this quaternion
 	 * @return length
@@ -90,7 +114,31 @@ public class Quaternion {
 		return new Quaternion(x_, y_, z_, w_);
 	}//end multiply
 	
+	/** Converts this quaternion into a rotation matrix **/
+	public Matrix4f toRotationMatrix() {
+		return new Matrix4f().initRotation(getForward(), getUp(), getRight());
+	}
+	
 	////* Getters and Setters *////
+	public Vector3f getForward() {//From top line of matrix obtained by multiplying rotation quaternion by vector and conjugate
+		return new Vector3f(2.0f * (x*z - w*y), 2.0f * (y*z + w*x), 1.0f - 2.0f * (x*x + y*y));
+	}
+	public Vector3f getUp() {
+		return new Vector3f(2.0f * (x*y + w*z), 1.0f - 2.0f * (x*x + z*z), 2.0f * (y*z - w*x));
+	}
+	public Vector3f getRight() {
+		return new Vector3f(1.0f - 2.0f * (y*y + z*z), 2.0f * (x*y - w*z), 2.0f * (x*z + w*y));
+	}
+	public Vector3f getBack() {
+		return new Vector3f(-(2.0f * (x*z - w*y)), -(2.0f * (y*z + w*x)), -(1.0f - 2.0f * (x*x + y*y)));
+	}
+	public Vector3f getDown() {
+		return new Vector3f(-(2.0f * (x*y + w*z)), -(1.0f - 2.0f * (x*x + z*z)), -(2.0f * (y*z - w*x)));
+	}
+	public Vector3f getLeft() {
+		return new Vector3f(-(1.0f - 2.0f * (y*y + z*z)), -(2.0f * (x*y - w*z)), -(2.0f * (x*z + w*y)));
+	}
+	
 	public float getX() {
 		return x;
 	}
