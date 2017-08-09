@@ -11,7 +11,8 @@ import slra.simObjects.utilities.Vertex;
 
 /**
  * Utilities Class
- * @author thebennybox, Henry Valentine
+ * @author Henry Valentine
+ * based on thebennybox 3D Game Engine Tutorial
  */
 public class Util {
 

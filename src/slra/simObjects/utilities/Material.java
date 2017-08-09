@@ -3,6 +3,14 @@ package slra.simObjects.utilities;
 import slra.mathUtilities.Vector3f;
 import slra.util.ResourceLoader;
 
+/**
+ * This Class represents an instantiation of a SimObject's material.
+ * Material defines the color, texture, and light reflection properties
+ * of an object.
+ * 
+ * @author Henry Valentine
+ *
+ */
 public class Material {
 	
 	/////* Instance Variables */////

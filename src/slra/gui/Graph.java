@@ -19,13 +19,12 @@ import slra.mathUtilities.Point2f;
  * 		 Make it look pretty.
  * 
  * @author Henry Valentine
- * @version 11/21/2016
+ * @version 12/8/2016
  */
 public class Graph {
 	
 	////* Instance Variables *////
 	private ArrayList<Point2f> points;	//Graph Points
-	private String title;				//Window Title
 	private Pane pane;					//Window Pane
 			
 	private final int WIDTH = 400;		//Window Width
@@ -39,7 +38,6 @@ public class Graph {
 	public Graph(String title, ArrayList<Point2f> points) {
 		//Initialize Instance Variables
 		this.points = points;
-		this.title = title;
 		
 		//Create Pane
 		pane = new Pane();
@@ -82,6 +80,12 @@ public class Graph {
 			if(point.getY() < minBright) {
 				minBright = point.getY();
 			}
+		}
+		
+		// Graph Straight line if all data is the same //
+		if(maxBright == minBright) {
+			maxBright++;
+			minBright--;
 		}
 		
 		//Create Points and Lines for Graphs and add them to the Pane

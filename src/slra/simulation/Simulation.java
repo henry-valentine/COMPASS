@@ -274,7 +274,7 @@ public class Simulation implements Runnable {
 	
 	/** Ends the current simulation */
 	public void terminate() {
-		System.out.println("----- Simulation Terminated -----");
+		System.out.println("----- Simulation Terminated -----\n");
 		gui.setRunning(false);
 		glfwDestroyWindow(windowID);
 		glfwTerminate();

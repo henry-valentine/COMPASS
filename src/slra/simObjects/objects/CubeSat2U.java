@@ -30,9 +30,9 @@ public class CubeSat2U extends SimObject{
 	 */
 	public void update() {
 		
-		xRot += xVel;
-		yRot += yVel;
-		zRot += zVel;
+		xRot += xVel * 6;
+		yRot += yVel * 6;
+		zRot += zVel * 6;
 		
 		// Keep rotation values between 0 and 360 //
 		if(xRot >= 360) xRot = 0;

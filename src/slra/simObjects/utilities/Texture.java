@@ -2,7 +2,8 @@ package slra.simObjects.utilities;
 
 import static org.lwjgl.opengl.GL11.*;
 /**
- * Represents a texture object
+ * Represents the texture belonging
+ * to any given material
  * @author thebennybox
  *
  */

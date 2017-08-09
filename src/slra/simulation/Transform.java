@@ -134,6 +134,9 @@ public class Transform {
 		return rotation;
 	}
 	
+	/* Change this! Use x,y,z to create a single rotation
+	 * axis and apply quaternion rotations to the up
+	 * and forward vectors */
 	public void setRotation(Vector3f rotation) {
 		up.setX(UP_AXIS.getX());
 		up.setY(UP_AXIS.getY());

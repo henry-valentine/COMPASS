@@ -39,7 +39,7 @@ public class KeyHandler extends GLFWKeyCallback {
 	}//end isKeyDown
 	
 	/**
-	 * Sets the key boolean array value for a specic
+	 * Sets the key boolean array value for a specific
 	 * key to true if it is pressed down
 	 */
 	public void invoke(long window, int key, int scancode, int action, int mods) { 
@@ -53,6 +53,7 @@ public class KeyHandler extends GLFWKeyCallback {
 		// Terminate Simulation of ESCAPE is pressed //
 		if(KeyHandler.isKeyDown(GLFW_KEY_ESCAPE)) {
 			sim.running = false;
+			keys[GLFW_KEY_ESCAPE] = false;
 		}
 		
 		// Pause The Simulation //

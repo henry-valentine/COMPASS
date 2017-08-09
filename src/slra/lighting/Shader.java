@@ -1,8 +1,6 @@
 package slra.lighting;
 
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL32.*;
-
 import java.util.HashMap;
 import slra.mathUtilities.Matrix4f;
 import slra.mathUtilities.Vector3f;

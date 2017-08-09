@@ -13,7 +13,8 @@ import slra.util.ResourceLoader;
  * variables (uniforms) in the shader
  * program.
  * Shader based on Phong lighting model
- * @author thebennybox, Henry Valentine
+ * @author Henry Valentine
+ * based on thebennybox 3D game Engine Tutorial
  */
 public class PhongShader extends Shader {
 	

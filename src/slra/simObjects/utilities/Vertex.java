@@ -4,7 +4,7 @@ import slra.mathUtilities.Vector2f;
 import slra.mathUtilities.Vector3f;
 /**
  * This class represents a mesh vertex
- * @author thebennybox
+ * @author thebennybox, Henry Valentine
  */
 public class Vertex {
 	

@@ -10,7 +10,7 @@ import slra.util.Util;
 /**
  * Represents the mesh of a
  * 3D object in OpenGL
- * @author thebennybox
+ * @author thebennybox, Henry Valentine
  */
 public class Mesh {
 	

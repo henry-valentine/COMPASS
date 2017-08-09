@@ -15,7 +15,7 @@ import slra.simObjects.utilities.Vertex;
 /**
  * Contains ResourceLoading Utilities
  * @author Henry Valentine
- *  based on thebennybox 3D Game Engine tutorials
+ * based on thebennybox 3D Game Engine tutorials
  */
 public class ResourceLoader {
 	
@@ -94,7 +94,7 @@ public class ResourceLoader {
 			reader.close();
 		}
 		catch(Exception e){
-			System.err.println("ERROR: Could Not Load Text From: " + path);
+			System.err.println("ERROR: COULD NOT LOAD FILE FROM: " + path);
 			return null;
 		}
 		
@@ -112,7 +112,7 @@ public class ResourceLoader {
 		String ext = splitArray[splitArray.length - 1];
 		
 		if(!ext.equals("obj")) {
-			System.err.println("Error: File Type not supported for Mesh data: " + ext);
+			System.err.println("ERROR: FILE TYPE NOT SUPPORTED FOR MESH DATA: " + ext);
 			new Exception().printStackTrace();
 			System.exit(1);
 		}
@@ -163,7 +163,7 @@ public class ResourceLoader {
 			return mesh;
 			
 		} catch(Exception e) {
-			System.err.println("Error: Failed to load mesh object: " + fileName);
+			System.err.println("ERROR: FAILED TO LOAD OBJECT MESH: " + fileName);
 			e.printStackTrace();
 		}
 		return null;

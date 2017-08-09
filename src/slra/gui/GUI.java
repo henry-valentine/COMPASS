@@ -10,13 +10,10 @@ import java.util.Scanner;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Orientation;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -24,10 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -43,38 +37,65 @@ import slra.util.ResourceLoader;
 /***************************************************CS225 Final Project**************************************************
  * Satellite Light Reflection Analyzer (SLRA)
  * @author Henry Valentine
- * @version 11/21/2016
+ * @version 12/8/2016
  * CS225 Section 1: Dr. Garfield
  * 
+ * Purpose:
  * This program simulates light interactions with 3D satellite models and calculates brightness levels as perceived
  * from a specific view-point. User input, accessed via the UI, is used to establish the satellites orientation
  * and angular velocity as well as the duration of the simulated pass (i.e. data collection period). Brightness data
  * is collected at regular intervals and logged in a text file. Data collections may be selected and graphed via the UI.
  * 
- * External Reference Libraries:
- * - LWJGL
- * 	- OpenGL
- * 	- GLFW
+ * EXTERNAL LIBRARIES:
+ *	**See Respective Websites for Licensing Agreements**
+ *	- LWJGL (Lightweight Java Game Library) : https://lwjgl.org/
+ *	- OpenGL : https://www.opengl.org/
+ *  - GLFW : http://www.glfw.org/
  * 
- * References:
- * - OpenGL-based 3D engine inspired by thebennybox youtube tutorials : https://www.youtube.com/user/thebennybox
- * 	 see res folder for License
- * - Heiko Brumme's Texture Class for LWJGL 3 Compatibility (See TextureLoader class for software license)
+ * REFERENCES:
+ *	- OpenGL-based 3D engine inspired by thebennybox youtube tutorials : 
+ *	  https://www.youtube.com/user/thebennybox (See project folder for license)
+ *	- Heiko Brumme's Texture Class for LWJGL 3 Compatibility (Under MIT License)
+ *	- Web-based PNG to ICON converter: http://convertico.com/
+ *	- Web-based STL to OBJ converter: http://www.greentoken.de/onlineconv/
  * 
- * TODO: 
- *  - Set translation to fill window
- *  - Display UI error message
- *  - Print a "Paused" message
- *  - Handle Parsing errors by printing a message to screen (or pop-up box)
- *  - Print a "Simulation Ended" Message
- *  - Use vectors to represent xRot yRot zRot cause its way easier
- *  - Add Graduations to Graph
- *  - User Defined Graph Scale
- *  - Save Simulation Button
- *  - Add Support for custom objects
- *  - Add support for STL files
- *  - Edit Shader Programs (Get Rid of Ambient Light - not needed - hardCode eye position?)
+ * NOTES:
+ *	- Program Documentation is included in the SLRA/doc directory (javadoc and UML)
+ *	- ** Error messages have not yet been implemented in the UI. 
+ *		 To see program error messages -> run SLRA.jar in the command window
  * 
+ * FUTURE UPDATES:
+ * 	- More research on Rendering equation and Genetic Algorithms*******
+ *  - Fix SimObject Rotations --> http://vmm.math.uci.edu/PalaisPapers/EulerFPT.pdf
+ *  	- Make more Realistic 
+ *  	- Euler rotation theorem
+ *  	- User rotation x,y,z to create a single axis
+ *  	- Include an option for rotational acceleration?
+ * 	- Make Light source size accurate.
+ * 	- Edit shader programs (Remove ambient light and other stuff...)
+ * 	- Add support for STL files
+ * 	- print a "pause" message
+ * 	- represent xRot, yRot... with vectors instead
+ * 	- UI Error Messages - Pop-up boxes or printing somewhere
+ * 	- Migrate Brightness calculations to Shader Program
+ * 	- Add ChildObject class whose position and orientation are defined by a parent SimObject (In progress) 
+ * 		- Add support for child objects in Simulation class (ArrayList with multiple objects)
+ * 	- Apply genetic algorithms to derive orientation from a given light curve
+ * 	- Create option to run and observe a single simulation, 
+ * 	  or run multiple (without rendering them) based on a genetic algorithm
+ * 	- Update shader to improve accuracy
+ * 		- Render Objects casting shadows on themselves and other objects
+ * 		- Assign specular intensity and power values to accurately model sunlight
+ * 	- Change aspect ratio to imitate telescope?
+ * 	- Change data collection interval to match telescope's?
+ * 	- Update graphing utility
+ * 		- Add graduations
+ * 		- Add User Defined Graph Scale
+ * 	- Make a "Save As" button. Choose whether to save or not after each sim (Default name is SimulationN) (Whatever number)
+ * 	- Option to run a single simulation at a time or run algorithm given a light curve. 
+ * 		- (Parameters for algorithm --> Save top x% of simulations, run to within x% of actual)
+ * 	- User defined sample rate --> Warnings for potential aliasing
+ * 	- Add more error messages
  *************************************************************************************************************************/
 
 /**
@@ -147,7 +168,7 @@ public class GUI extends Application {
 		//Satellite Image
 		image = new ImageView(new Image("file:res/images/SatLogo.png"));
 		if(image == null) {
-			System.err.println("ERROR: Logo Not Loaded =(");
+			System.err.println("ERROR: LOGO NOT LOADED =(");
 		}
 		
 		//SLRA Text
@@ -306,7 +327,7 @@ public class GUI extends Application {
 		btHelp.setOnMouseExited(e -> btHelp.setBackground(darkGreyBr));
 		//Create Help Window when clicked
 		btHelp.setOnMouseClicked(e -> {
-			//Create Label and help text
+			//Create Label and load help text //
 			Label helpLabel = new Label();
 			String helpText = ResourceLoader.loadText("res/help.txt");
 			
@@ -315,6 +336,7 @@ public class GUI extends Application {
 			helpLabel.setPrefWidth(381);
 			helpLabel.setBackground(darkGreyBr);
 			
+			// Create Help Box and Scroll Bar //-
 			VBox root = new VBox();
 			Scene helpScene = new Scene(root, 400, 200);
 			ScrollPane sp = new ScrollPane();
@@ -357,7 +379,7 @@ public class GUI extends Application {
 				new Graph(graphBox.getValue(), retrieveData(simulations.get(graphBox.getValue())));
 			}
 			else {
-				System.err.println("ERROR: Invalid Graph Selection");
+				System.err.println("ERROR: INVALID GRAPH SELECTION.");
 			}
 		});
 		
@@ -479,14 +501,14 @@ public class GUI extends Application {
 			passDuration = Integer.parseInt(tfPassDuration.getText());
 			System.out.println("Simulation Parameters Loaded...");
 		} catch(Exception e) {
-			System.err.println("ERROR: Could not parse values from TextField(s)");
+			System.err.println("ERROR: COULD NOT PARSE VALUES FROM TEXTFIELD(S");
 			error = true;
 		}
 		
 		// If Values Were Parsed Correctly, Create a new Simulation //
 		if(!error) {
 			if(!running) {
-				Simulation sim = new Simulation(passDuration, this);			//Create and initialize new Simulation
+				Simulation sim = new Simulation(passDuration, this);//Create and initialize new Simulation ***** Change to include sample rate!
 				SimObject object = null;
 				
 				try {
@@ -505,11 +527,17 @@ public class GUI extends Application {
 					}
 					System.out.println(object + " Successfully Created...");
 				} catch(Exception e) {
-					System.err.println("ERROR: Object Selection Not Valid");
+					System.err.println("ERROR: OBJECT SELECTION NOT VALID.");
 				}
 				
 				// Add Object and Run the Simulation //
 				if(object != null) {
+					
+					// Aliasing Warning //
+					if(xVel >= 2.5 || yVel >= 2.5 || zVel >= 2.5) { //Change values for user defined sample rate! (Passed in to Simulation constructor)
+						System.err.println("WARNING: HIGH ANGULAR VELOCITIES. POTENTIAL DATA CORRUPTION DUE TO ALIASING.");
+					}
+					
 					sim.addObject(object, xRot, yRot, zRot, xVel, yVel, zVel);//Add object to the simulation
 					sim.run();//Run the simulation
 				}
@@ -519,12 +547,9 @@ public class GUI extends Application {
 				}
 			}
 			else {
-				System.err.println("ERROR: Cannot Run Multiple Simulations at once.");
+				System.err.println("ERROR: CANNOT RUN MULTIPLE SIMULATIONS AT ONCE.");
 			}
 		}
-		
-		// Display Error Message in GUI //
-		
 	}//end run
 	
 	/**

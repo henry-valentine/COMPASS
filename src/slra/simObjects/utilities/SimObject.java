@@ -4,7 +4,7 @@ import slra.simulation.Transform;
 
 /**
  * SimObject Class
- * Simulation Object BluePrint
+ * SLRA Simulation Object BluePrint
  * @author Henry Valentine
  *
  */
@@ -21,9 +21,10 @@ public abstract class SimObject {
 	/////* Constructors */////
 	/**
 	 * Primary Constructor
-	 * @param mesh
-	 * @param tranform
-	 * @param material
+	 * Creates a new SLRA SimObject
+	 * @param mesh		: Mesh defining the structure of this object 
+	 * @param tranform	: Transformation of this objects vertices
+	 * @param material	: Material this object is composed of
 	 */
 	public SimObject(Mesh mesh, Transform tranform, Material material) {
 		this.mesh = mesh;
@@ -32,18 +33,20 @@ public abstract class SimObject {
 	}//end constructor
 	
 	/**
+	 * Creates a new SLRA SimObject
 	 * Uses default material and texture
-	 * @param mesh
-	 * @param transform
+	 * @param mesh		: Mesh defining the structure of this object 
+	 * @param tranform	: Transformation of this objects vertices
 	 */
 	public SimObject(Mesh mesh, Transform transform) {
 		this(mesh, transform, new Material());
 	}//end constructor
 	
 	/**
+	 * Creates a new SLRA SimObject
 	 * Default material and texture
 	 * World position set to middle of the map.
-	 * @param mesh
+	 * @param mesh : Mesh defining the structure of this object
 	 */
 	public SimObject(Mesh mesh) {
 		this(mesh, new Transform(), new Material()); 
