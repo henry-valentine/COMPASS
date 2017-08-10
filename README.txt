@@ -1,4 +1,4 @@
-************************************* Satellite Light Reflection Analyzer *************************************
+************************************* Computational Photometry Analyzer for Small Satellites *************************************
 	Author: Henry Valentine, Embry-Riddle Aernonautical University
 	Current Version: 0.9.1
 	Version Date: 12/12/2016
