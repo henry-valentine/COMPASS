@@ -2,9 +2,8 @@
 	Author: Henry Valentine, Embry-Riddle Aernonautical University
 	Current Version: 0.9.1
 	Version Date: 12/12/2016
-	Copyright © 2017, Henry Valentine
 	
-	(DEVELOPER README)
+	This README is not up to date.... and it sucks....
 	
 	PURPOSE:
 		- This program simulates light interactions with 3D satellite models and calculates brightness levels as perceived
