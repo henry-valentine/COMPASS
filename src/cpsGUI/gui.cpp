@@ -1,4 +1,4 @@
-#include "include/gui.h"
+#include "include/cpsGUI/gui.h"
 #include "ui_gui.h"
 
 GUI::GUI(QWidget *parent) :

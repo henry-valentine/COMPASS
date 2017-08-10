@@ -7,6 +7,7 @@
  *  - Change Name of GUI class? My cause some issues/confusion, but I'm not sure...
  *  - Write out high-level program architecture: Consider primary functions and go from there...
  *  - Cereate GUI Design
+ *  - include ui_gui.h and build folder to avoid issues?
  */
 
 int main(int argc, char *argv[])

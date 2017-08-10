@@ -1,4 +1,4 @@
-#include "include/glwidget.h"
+#include "include/cpsGUI/glwidget.h"
 
 
 GLWidget::GLWidget(QWidget *parent) :
