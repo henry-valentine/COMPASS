@@ -34,7 +34,7 @@ public:
     QVBoxLayout *verticalLayout_2;
     QVBoxLayout *verticalLayout;
     QSpacerItem *verticalSpacer;
-    QPushButton *pushButton;
+    QPushButton *exitButton;
     GLWidget *OpenGL;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -62,10 +62,10 @@ public:
 
         verticalLayout->addItem(verticalSpacer);
 
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        exitButton = new QPushButton(centralWidget);
+        exitButton->setObjectName(QStringLiteral("exitButton"));
 
-        verticalLayout->addWidget(pushButton);
+        verticalLayout->addWidget(exitButton);
 
 
         verticalLayout_2->addLayout(verticalLayout);
@@ -99,7 +99,7 @@ public:
         menuBar->addAction(menuHelp->menuAction());
 
         retranslateUi(GUI);
-        QObject::connect(pushButton, SIGNAL(released()), GUI, SLOT(close()));
+        QObject::connect(exitButton, SIGNAL(released()), GUI, SLOT(close()));
 
         QMetaObject::connectSlotsByName(GUI);
     } // setupUi
@@ -107,7 +107,7 @@ public:
     void retranslateUi(QMainWindow *GUI)
     {
         GUI->setWindowTitle(QApplication::translate("GUI", "COMPASS", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("GUI", "Exit", Q_NULLPTR));
+        exitButton->setText(QApplication::translate("GUI", "Exit", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("GUI", "File", Q_NULLPTR));
         menuHelp->setTitle(QApplication::translate("GUI", "Help", Q_NULLPTR));
     } // retranslateUi

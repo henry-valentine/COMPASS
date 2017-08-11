@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     src/cpsGUI/gui.cpp \
     src/main.cpp \
-    src/cpsGUI/glwidget.cpp
+    src/cpsGUI/glwidget.cpp \
+    src/cpsMath/vector3f.cpp
 
 HEADERS += \
     include/cpsGUI/gui.h \
-    include/cpsGUI/glwidget.h
+    include/cpsGUI/glwidget.h \
+    include/cpsMath/vector3f.h
 
 FORMS += \
         gui.ui
