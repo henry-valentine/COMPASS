@@ -10,23 +10,33 @@
  * Contains the implementation of GUI
  ********************************************************/
 
-#include "include/cpsGUI/gui.h"
-#include "ui_gui.h"
+#include "include/cpsGUI/cpsWindow.h"
+#include "ui_CpsWindow.h"
 
-GUI::GUI(QWidget *parent) :
+CpsWindow::CpsWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::GUI)
+    ui(new Ui::CpsWindow)
 {
     ui->setupUi(this);
+
+    // Update Loop
+    connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
+    timer.start(16); // 60 fps
 }
 
-GUI::~GUI()
+CpsWindow::~CpsWindow()
 {
     delete ui;
 }
 
+void CpsWindow::update()
+{
+    ui->CpsSim->update();
+    // Update Graph
+}
+
 // GUI Event Handling
-void GUI::on_exitButton_released()
+void CpsWindow::on_exitButton_released()
 {
     this->close();
 }

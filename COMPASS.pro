@@ -24,15 +24,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-    src/cpsGUI/gui.cpp \
     src/main.cpp \
-    src/cpsGUI/glwidget.cpp \
-    src/cpsMath/vector3f.cpp
+    src/cpsMath/vector3f.cpp \
+    src/cpsGUI/cpsWindow.cpp \
+    src/cpsGUI/cpsWidget.cpp
 
 HEADERS += \
-    include/cpsGUI/gui.h \
-    include/cpsGUI/glwidget.h \
-    include/cpsMath/vector3f.h
+    include/cpsMath/vector3f.h \
+    include/cpsGUI/cpsWindow.h \
+    include/cpsGUI/cpsWidget.h
 
 FORMS += \
-        gui.ui
+    CpsWindow.ui
