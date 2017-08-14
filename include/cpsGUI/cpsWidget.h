@@ -8,27 +8,23 @@
  * @version 8/11/2017
  *
  * The GLWidget class represents the QT Widget that
- * contains the OpenGL contect for this program.
+ * contains the OpenGL context for this program.
  ********************************************************/
 
-#ifndef GLWIDGET_H
-#define GLWIDGET_H
+#ifndef CPSWIDGET_H
+#define CPSWIDGET_H
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
-#include <QTimer>
 
-class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
+class CpsWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:
-    GLWidget(QWidget *parent);
+    CpsWidget(QWidget *parent);
 
     void initializeGL();
     void paintGL();
     void resizeGL(int w, int h);
-
-private:
-    QTimer timer;
 };
 
-#endif // GLWIDGET_H
+#endif // CPSWIDGET_H

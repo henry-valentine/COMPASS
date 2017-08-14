@@ -11,28 +11,31 @@
  * User Interface used within this program.
  ********************************************************/
 
-#ifndef GUI_H
-#define GUI_H
+#ifndef CPSWINDOW_H
+#define CPSWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
 
 namespace Ui {
-class GUI;
+class CpsWindow;
 }
 
-class GUI : public QMainWindow
+class CpsWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit GUI(QWidget *parent = 0);
-    ~GUI();
+    explicit CpsWindow(QWidget *parent = 0);
+    ~CpsWindow();
 
 private slots:
     void on_exitButton_released();
 
 private:
-    Ui::GUI *ui;
+    Ui::CpsWindow *ui;
+    QTimer timer;
+    void update();
 };
 
-#endif // GUI_H
+#endif // CPSWINDOW_H

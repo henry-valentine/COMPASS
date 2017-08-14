@@ -20,13 +20,13 @@
  *
  ********************************************************/
 
-#include "include/cpsGUI/gui.h"
+#include "include/cpsGUI/cpsWindow.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    GUI w;
+    CpsWindow w;
     w.show();
 
     return a.exec();
