@@ -6,7 +6,7 @@
 
 QT       += core gui widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets opengl
 
 TARGET = COMPASS
 TEMPLATE = app
@@ -27,12 +27,14 @@ SOURCES += \
     src/main.cpp \
     src/cpsMath/vector3f.cpp \
     src/cpsGUI/cpsWindow.cpp \
-    src/cpsGUI/cpsWidget.cpp
+    src/cpsGUI/cpsWidget.cpp \
+    src/cpsGUI/cpsGraph.cpp
 
 HEADERS += \
     include/cpsMath/vector3f.h \
     include/cpsGUI/cpsWindow.h \
-    include/cpsGUI/cpsWidget.h
+    include/cpsGUI/cpsWidget.h \
+    include/cpsGUI/cpsGraph.h
 
 FORMS += \
     CpsWindow.ui

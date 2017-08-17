@@ -122,7 +122,7 @@ public:
     float getZ() const;
 
 private:
-    /* Components of this Vector */
+    /** Components of this Vector **/
     float m_x, m_y, m_z;
 };
 #endif // VECTOR3F_H
