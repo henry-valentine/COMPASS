@@ -120,7 +120,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QWidget" name="CpsSim" native="true">
+       <widget class="CpsWidget" name="CpsSim" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -145,9 +145,6 @@
     </item>
     <item>
      <layout class="QVBoxLayout" name="GraphConsoleLayout">
-      <item>
-       <widget class="QWidget" name="CpsGraph" native="true"/>
-      </item>
       <item>
        <widget class="QScrollArea" name="scrollArea">
         <property name="minimumSize">
@@ -201,6 +198,14 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>CpsWidget</class>
+   <extends>QWidget</extends>
+   <header>include/cpsGUI/cpsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

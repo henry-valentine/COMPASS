@@ -23,6 +23,7 @@
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "include/cpsGUI/cpsWidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -41,9 +42,8 @@ public:
     QRadioButton *radioButton_3;
     QRadioButton *radioButton_4;
     QVBoxLayout *verticalLayout_3;
-    QWidget *CpsSim;
+    CpsWidget *CpsSim;
     QVBoxLayout *GraphConsoleLayout;
-    QWidget *CpsGraph;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QVBoxLayout *verticalLayout;
@@ -122,7 +122,7 @@ public:
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        CpsSim = new QWidget(centralWidget);
+        CpsSim = new CpsWidget(centralWidget);
         CpsSim->setObjectName(QStringLiteral("CpsSim"));
         QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
@@ -140,11 +140,6 @@ public:
         GraphConsoleLayout = new QVBoxLayout();
         GraphConsoleLayout->setSpacing(6);
         GraphConsoleLayout->setObjectName(QStringLiteral("GraphConsoleLayout"));
-        CpsGraph = new QWidget(centralWidget);
-        CpsGraph->setObjectName(QStringLiteral("CpsGraph"));
-
-        GraphConsoleLayout->addWidget(CpsGraph);
-
         scrollArea = new QScrollArea(centralWidget);
         scrollArea->setObjectName(QStringLiteral("scrollArea"));
         scrollArea->setMinimumSize(QSize(0, 200));
