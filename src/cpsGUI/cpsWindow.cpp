@@ -18,6 +18,10 @@ CpsWindow::CpsWindow(QWidget *parent) :
     ui(new Ui::CpsWindow)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+
+    qDebug(styleSheet().toLatin1());//TEST
+
 
     // Update Loop
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));

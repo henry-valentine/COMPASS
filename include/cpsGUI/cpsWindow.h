@@ -14,12 +14,12 @@
 #ifndef CPSWINDOW_H
 #define CPSWINDOW_H
 
-#include <QMainWindow>
-#include <QTimer>
-
 namespace Ui {
 class CpsWindow;
 }
+
+#include <QMainWindow>
+#include <QTimer>
 
 class CpsWindow : public QMainWindow
 {
@@ -50,6 +50,7 @@ private:
 
     /** Update Timer **/
     QTimer timer;
+
 };
 
 #endif // CPSWINDOW_H
