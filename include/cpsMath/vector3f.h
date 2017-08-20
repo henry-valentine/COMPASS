@@ -1,6 +1,6 @@
 /********************************************************
  * Computational Photometry Analyzer for Small Satellites
- * Embry-Riddle Aeronautical University
+ * Copyright ©, 2017 Embry-Riddle Aeronautical University
  *
  * File: vector3f.h
  *
@@ -122,7 +122,7 @@ public:
     float getZ() const;
 
 private:
-    /* Components of this Vector */
+    /** Components of this Vector **/
     float m_x, m_y, m_z;
 };
 #endif // VECTOR3F_H
