@@ -79,6 +79,7 @@ available.
     OpenGL         - https://www.opengl.org/ 
     QT             - https://www.qt.io/
     GitHub         - https://github.com/
-    QSS Stylesheet - https://github.com/ColinDuquesnoy/QDarkStyleSheet (Under MIT License. See qDarkStyle.qss)
+    QSS Stylesheet - https://github.com/ColinDuquesnoy/QDarkStyleSheet 
+                     (Under MIT License. See qDarkStyle.qss)
 
 *******************************************************************************
