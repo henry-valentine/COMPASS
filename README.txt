@@ -3,7 +3,7 @@
 **           Computational Photemtry Analyzer for Small Satellites           **
 **                                                                           **
 *******************************************************************************
-Embry-Riddle Aeronautical University
+Copyright ©, 2017 Embry-Riddle Aeronautical University
 Space and Atmospheric Instrumentation Lab
 COMPASS - V 1.0.0 - 08/15/17
 
@@ -76,8 +76,9 @@ Libraries and Resources
 All libraries and resources used within this program are Open Source and freely
 available.
 
-    OpenGL - https://www.opengl.org/ 
-    QT     - https://www.qt.io/
-    GitHub - https://github.com/
+    OpenGL         - https://www.opengl.org/ 
+    QT             - https://www.qt.io/
+    GitHub         - https://github.com/
+    QSS Stylesheet - https://github.com/ColinDuquesnoy/QDarkStyleSheet (Under MIT License. See qDarkStyle.qss)
 
 *******************************************************************************

@@ -1,6 +1,6 @@
 /********************************************************
  * Computational Photometry Analyzer for Small Satellites
- * Embry-Riddle Aeronautical University
+ * Copyright ©, 2017 Embry-Riddle Aeronautical University
  *
  * File: main.cpp
  *
@@ -11,7 +11,6 @@
  *
  *
  * TODO:
- *  - Create GUI Design
  *  - Folders: cpsMath, cpsGUI, cpsRendering, cpsSimulation, cpsUtil, cpsSimObjects
  *
  ********************************************************/

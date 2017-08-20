@@ -1,6 +1,6 @@
 /********************************************************
  * Computational Photometry Analyzer for Small Satellites
- * Embry-Riddle Aeronautical University
+ * Copyright ©, 2017 Embry-Riddle Aeronautical University
  *
  * File: cpsWindow.h
  *

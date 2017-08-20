@@ -38,3 +38,6 @@ HEADERS += \
 
 FORMS += \
     CpsWindow.ui
+
+RESOURCES += \
+    res/ui_res.qrc

@@ -1,6 +1,6 @@
 /********************************************************
  * Computational Photometry Analyzer for Small Satellites
- * Embry-Riddle Aeronautical University
+ * Copyright ©, 2017 Embry-Riddle Aeronautical University
  *
  * File: cpsWindow.cpp
  *
@@ -19,9 +19,6 @@ CpsWindow::CpsWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-
-    qDebug(styleSheet().toLatin1());//TEST
-
 
     // Update Loop
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
