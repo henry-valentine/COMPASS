@@ -35,8 +35,8 @@
    <string>COMPASS</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(50, 50, 50);
-border-color: rgb(190, 190, 190);</string>
+   <string notr="true">
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="sizePolicy">
@@ -94,7 +94,7 @@ QCheckBox
 {
     spacing: 5px;
     outline: none;
-    color: #eff0f1;
+    color: white;
     margin-bottom: 2px;
 }
 
@@ -116,7 +116,7 @@ QGroupBox::indicator
 
 QCheckBox::indicator:unchecked
 {
-    image: url(:/res/images/checkbox_unchecked.png);
+    image: url(:/res/images/icon_checkbox_unchecked.png);
 }
 
 QCheckBox::indicator:unchecked:hover,
@@ -127,12 +127,12 @@ QGroupBox::indicator:unchecked:focus,
 QGroupBox::indicator:unchecked:pressed
 {
   border: none;
-    image: url(:/res/images/checkbox_unchecked_focus.png);
+    image: url(:/res/images/icon_checkbox_unchecked_pressed.png);
 }
 
 QCheckBox::indicator:checked
 {
-    image: url(:/res/images/checkbox_checked.png);
+    image: url(:/res/images/icon_checkbox_checked.png);
 }
 
 QCheckBox::indicator:checked:hover,
@@ -143,32 +143,32 @@ QGroupBox::indicator:checked:focus,
 QGroupBox::indicator:checked:pressed
 {
   border: none;
-    image: url(:/res/images/checkbox_checked_focus.png);
+    image: url(:/res/images/icon_checkbox_checked_pressed.png);
 }
 
 
 QCheckBox::indicator:indeterminate
 {
-    image: url(:/res/images/checkbox_indeterminate.png);
+    image: url(:/res/images/icon_checkbox_indeterminate.png);
 }
 
 QCheckBox::indicator:indeterminate:focus,
 QCheckBox::indicator:indeterminate:hover,
 QCheckBox::indicator:indeterminate:pressed
 {
-    image: url(:/res/images/checkbox_indeterminate_focus.png);
+    image: url(:/res/images/icon_checkbox_indeterminate_pressed.png);
 }
 
 QCheckBox::indicator:checked:disabled,
 QGroupBox::indicator:checked:disabled
 {
-    image: url(:/res/images/checkbox_checked_disabled.png);
+    image: url(:/res/images/icon_checkbox_checked_disabled.png);
 }
 
 QCheckBox::indicator:unchecked:disabled,
 QGroupBox::indicator:unchecked:disabled
 {
-    image: url(:/res/images/checkbox_unchecked_disabled.png);
+    image: url(:/res/images/cicon_checkbox_unchecked_disabled.png);
 }
 
 QRadioButton
@@ -1200,22 +1200,19 @@ QTableCornerButton::section {
 
 QToolBox  {
     padding: 5px;
-    border: 1px transparent black;
+    border: none;
 }
 
 QToolBox::tab {
     color: #eff0f1;
     background-color: #31363b;
-    border: 1px solid #76797C;
-    border-bottom: 1px transparent #31363b;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-image: url(:/res/images/toolboxPage.png);
 }
 
-QToolBox::tab:selected { /* italicize selected tabs */
+QToolBox::tab:selected {
     font: italic;
     background-color: #31363b;
-    border-color: #3daee9;
+    border-image: url(:/res/images/toolboxPage_selected.png);
  }
 
 QStatusBar::item {
@@ -1301,12 +1298,11 @@ QDateEdit::down-arrow:on, QDateEdit::down-arrow:hover,
 QDateEdit::down-arrow:focus
 {
     image: url(:/res/images/down_arrow.png);
-}
-</string>
+}</string>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="menuLayout">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -1337,7 +1333,7 @@ QDateEdit::down-arrow:focus
          </size>
         </property>
         <property name="currentIndex">
-         <number>4</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="satellitePage">
          <property name="geometry">
@@ -1359,7 +1355,7 @@ QDateEdit::down-arrow:focus
            <number>0</number>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox_16">
+           <widget class="QGroupBox" name="satelliteSelectionGroup">
             <property name="title">
              <string>Selection</string>
             </property>
@@ -1428,7 +1424,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_17">
+           <widget class="QGroupBox" name="satelliteInformationGroup">
             <property name="title">
              <string>Information</string>
             </property>
@@ -1628,6 +1624,13 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="satellitePreviewButton">
+            <property name="text">
+             <string>Preview</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="verticalSpacer_7">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -1662,7 +1665,7 @@ QDateEdit::down-arrow:focus
            <number>0</number>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox_2">
+           <widget class="QGroupBox" name="telescopeSensorGroup">
             <property name="title">
              <string>Sensor Options</string>
             </property>
@@ -1728,7 +1731,7 @@ QDateEdit::down-arrow:focus
            <number>0</number>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox_23">
+           <widget class="QGroupBox" name="graphScaleGroup">
             <property name="title">
              <string>Scale</string>
             </property>
@@ -1796,7 +1799,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_24">
+           <widget class="QGroupBox" name="graphOptionsGroup">
             <property name="title">
              <string>Options</string>
             </property>
@@ -1819,7 +1822,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_22">
+           <widget class="QGroupBox" name="graphLoadDataGroup">
             <property name="title">
              <string>Load Simulation Data</string>
             </property>
@@ -1845,7 +1848,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_8">
+           <widget class="QPushButton" name="graphButton">
             <property name="text">
              <string>Graph</string>
             </property>
@@ -1866,17 +1869,17 @@ QDateEdit::down-arrow:focus
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="runPage">
+        <widget class="QWidget" name="passPage">
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-162</y>
+           <y>0</y>
            <width>175</width>
            <height>719</height>
           </rect>
          </property>
          <attribute name="label">
-          <string>Run</string>
+          <string>Pass</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <property name="leftMargin">
@@ -1886,7 +1889,7 @@ QDateEdit::down-arrow:focus
            <number>0</number>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox_18">
+           <widget class="QGroupBox" name="runSimMode">
             <property name="title">
              <string>Simulation Mode</string>
             </property>
@@ -1909,7 +1912,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_19">
+           <widget class="QGroupBox" name="runRenderMode">
             <property name="title">
              <string>Render Mode</string>
             </property>
@@ -1932,7 +1935,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_6">
+           <widget class="QGroupBox" name="runTLEGroup">
             <property name="title">
              <string>TLE</string>
             </property>
@@ -2000,7 +2003,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_7">
+           <widget class="QGroupBox" name="runObserverLocationGroup">
             <property name="title">
              <string>Observer Location</string>
             </property>
@@ -2061,7 +2064,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_8">
+           <widget class="QGroupBox" name="runObserverTimeGroup">
             <property name="title">
              <string>Observation Time</string>
             </property>
@@ -2122,7 +2125,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_9">
+           <widget class="QGroupBox" name="runRotationGrou">
             <property name="title">
              <string>Rotation</string>
             </property>
@@ -2327,7 +2330,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QProgressBar" name="progressBar">
+           <widget class="QProgressBar" name="runProgressBar">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -2389,7 +2392,7 @@ QDateEdit::down-arrow:focus
            <number>2</number>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox_10">
+           <widget class="QGroupBox" name="manualLightDirectionGroup">
             <property name="title">
              <string>Light Direction</string>
             </property>
@@ -2536,7 +2539,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_11">
+           <widget class="QGroupBox" name="manualAttitudeGroup">
             <property name="title">
              <string>Attitude</string>
             </property>
@@ -2727,7 +2730,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_12">
+           <widget class="QGroupBox" name="manualAngularVelocityGroup">
             <property name="title">
              <string>Angular Velocity</string>
             </property>
@@ -2918,7 +2921,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_13">
+           <widget class="QGroupBox" name="manualAltitudeGroup">
             <property name="title">
              <string>Altitude</string>
             </property>
@@ -2986,7 +2989,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_5">
+           <widget class="QGroupBox" name="manualCameraControlGroup">
             <property name="title">
              <string>Camera Control</string>
             </property>
@@ -3096,7 +3099,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox">
+           <widget class="QGroupBox" name="playbackSimDataGroup">
             <property name="title">
              <string>Load Simulation Data</string>
             </property>
@@ -3128,9 +3131,9 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_14">
+           <widget class="QGroupBox" name="playbackTimingGroup">
             <property name="title">
-             <string>Playback Timing</string>
+             <string>Timing</string>
             </property>
             <layout class="QGridLayout" name="gridLayout">
              <item row="0" column="0">
@@ -3316,7 +3319,7 @@ QDateEdit::down-arrow:focus
            <number>0</number>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox_21">
+           <widget class="QGroupBox" name="reconstructionSimModeGroup">
             <property name="title">
              <string>Simulation Mode</string>
             </property>
@@ -3339,7 +3342,7 @@ QDateEdit::down-arrow:focus
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_3">
+           <widget class="QGroupBox" name="reconstructionSimDataGroup">
             <property name="title">
              <string>Load Simulation Data</string>
             </property>
@@ -3553,7 +3556,7 @@ QDateEdit::down-arrow:focus
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_9">
+       <widget class="QPushButton" name="resetButton">
         <property name="text">
          <string>Reset</string>
         </property>
@@ -3593,9 +3596,9 @@ QDateEdit::down-arrow:focus
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QVBoxLayout" name="simLayout">
       <item>
-       <widget class="CpsWidget" name="CpsSim" native="true">
+       <widget class="CpsWidget" name="cpsSim" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -3658,10 +3661,10 @@ background-color : rgba(0,0,0,255);</string>
     <item>
      <layout class="QVBoxLayout" name="GraphConsoleLayout">
       <item>
-       <widget class="QWidget" name="widget" native="true"/>
+       <widget class="QWidget" name="cpsGraph" native="true"/>
       </item>
       <item>
-       <widget class="QScrollArea" name="scrollArea">
+       <widget class="QScrollArea" name="consoleScrollArea">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -3683,7 +3686,7 @@ background-color : rgba(0,0,0,255);</string>
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
+        <widget class="QWidget" name="consoleLayout">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -3694,7 +3697,7 @@ background-color : rgba(0,0,0,255);</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="console">
             <property name="text">
              <string>Output Console</string>
             </property>

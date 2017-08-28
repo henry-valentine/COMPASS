@@ -14,12 +14,25 @@
 #ifndef CPSGRAPH_H
 #define CPSGRAPH_H
 
-#include <QWidget>
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
 
-class CpsGraph : public QWidget
+QT_CHARTS_USE_NAMESPACE
+
+class CpsGraph : public QChart
 {
+    Q_OBJECT
+
 public:
-    CpsGraph(QWidget *parent);
+    /** Constructor **/
+    CpsGraph(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    ~CpsGraph();
+
+    /** TODO **/
+    void update();
+
+    /** Instance Variables **/
+    QLineSeries m_data;
 };
 
 #endif // CPSGRAPH_H

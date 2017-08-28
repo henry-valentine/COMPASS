@@ -1,26 +1,3 @@
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) <2013-2014> <Colin Duquesnoy>
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
-
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 QToolTip
 {
     border: 1px solid #76797C;
@@ -57,7 +34,7 @@ QCheckBox
 {
     spacing: 5px;
     outline: none;
-    color: #eff0f1;
+    color: white;
     margin-bottom: 2px;
 }
 
@@ -79,7 +56,7 @@ QGroupBox::indicator
 
 QCheckBox::indicator:unchecked
 {
-    image: url(:/res/images/checkbox_unchecked.png);
+    image: url(:/res/images/icon_checkbox_unchecked.png);
 }
 
 QCheckBox::indicator:unchecked:hover,
@@ -90,12 +67,12 @@ QGroupBox::indicator:unchecked:focus,
 QGroupBox::indicator:unchecked:pressed
 {
   border: none;
-    image: url(:/res/images/checkbox_unchecked_focus.png);
+    image: url(:/res/images/icon_checkbox_unchecked_pressed.png);
 }
 
 QCheckBox::indicator:checked
 {
-    image: url(:/res/images/checkbox_checked.png);
+    image: url(:/res/images/icon_checkbox_checked.png);
 }
 
 QCheckBox::indicator:checked:hover,
@@ -106,32 +83,32 @@ QGroupBox::indicator:checked:focus,
 QGroupBox::indicator:checked:pressed
 {
   border: none;
-    image: url(:/res/images/checkbox_checked_focus.png);
+    image: url(:/res/images/icon_checkbox_checked_pressed.png);
 }
 
 
 QCheckBox::indicator:indeterminate
 {
-    image: url(:/res/images/checkbox_indeterminate.png);
+    image: url(:/res/images/icon_checkbox_indeterminate.png);
 }
 
 QCheckBox::indicator:indeterminate:focus,
 QCheckBox::indicator:indeterminate:hover,
 QCheckBox::indicator:indeterminate:pressed
 {
-    image: url(:/res/images/checkbox_indeterminate_focus.png);
+    image: url(:/res/images/icon_checkbox_indeterminate_pressed.png);
 }
 
 QCheckBox::indicator:checked:disabled,
 QGroupBox::indicator:checked:disabled
 {
-    image: url(:/res/images/checkbox_checked_disabled.png);
+    image: url(:/res/images/icon_checkbox_checked_disabled.png);
 }
 
 QCheckBox::indicator:unchecked:disabled,
 QGroupBox::indicator:unchecked:disabled
 {
-    image: url(:/res/images/checkbox_unchecked_disabled.png);
+    image: url(:/res/images/cicon_checkbox_unchecked_disabled.png);
 }
 
 QRadioButton
@@ -989,8 +966,8 @@ QSlider::groove:horizontal {
 QSlider::handle:horizontal {
     background: #232629;
     border: 1px solid #565a5e;
-    width: 16px;
-    height: 16px;
+    width: 8px;
+    height: 8px;
     margin: -8px 0;
     border-radius: 9px;
 }
@@ -1006,8 +983,8 @@ QSlider::groove:vertical {
 QSlider::handle:vertical {
     background: #232629;
     border: 1px solid #565a5e;
-    width: 16px;
-    height: 16px;
+    width: 8px;
+    height: 8px;
     margin: 0 -8px;
     border-radius: 9px;
 }
@@ -1163,22 +1140,19 @@ QTableCornerButton::section {
 
 QToolBox  {
     padding: 5px;
-    border: 1px transparent black;
+    border: none;
 }
 
 QToolBox::tab {
     color: #eff0f1;
     background-color: #31363b;
-    border: 1px solid #76797C;
-    border-bottom: 1px transparent #31363b;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-image: url(:/res/images/toolboxPage.png);
 }
 
-QToolBox::tab:selected { /* italicize selected tabs */
+QToolBox::tab:selected {
     font: italic;
     background-color: #31363b;
-    border-color: #3daee9;
+    border-image: url(:/res/images/toolboxPage_selected.png);
  }
 
 QStatusBar::item {
@@ -1265,3 +1239,4 @@ QDateEdit::down-arrow:focus
 {
     image: url(:/res/images/down_arrow.png);
 }
+
