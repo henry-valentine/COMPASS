@@ -1,6 +1,6 @@
 *******************************************************************************
 **                                                                           **
-**           Computational Photemtry Analyzer for Small Satellites           **
+**           Computational Photometry Analyzer for Small Satellites          **
 **                                                                           **
 *******************************************************************************
 Copyright ©, 2017 Embry-Riddle Aeronautical University
