@@ -6,7 +6,7 @@
 
 QT       += core gui widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets opengl
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets opengl charts
 
 TARGET = COMPASS
 TEMPLATE = app

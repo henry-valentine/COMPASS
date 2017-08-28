@@ -10,6 +10,7 @@
  * Contains the implementation of CpsWindow
  ********************************************************/
 
+#include <QFile>
 #include "include/cpsGUI/cpsWindow.h"
 #include "ui_CpsWindow.h"
 
@@ -17,10 +18,11 @@ CpsWindow::CpsWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::CpsWindow)
 {
+    // Initialize Window and UI //
     ui->setupUi(this);
     setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 
-    // Update Loop
+    // Update Loop //
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
     timer.start(16); // 60 fps
 }
@@ -32,7 +34,7 @@ CpsWindow::~CpsWindow()
 
 void CpsWindow::update()
 {
-    ui->CpsSim->update();
+    ui->cpsSim->update();
     // Update Graph
 }
 
