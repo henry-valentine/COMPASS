@@ -1,0 +1,104 @@
+TODO:
+
+	Current Goal: Prepare application for MipMap test and Simulating Actual Orbits
+
+	Current TODO:
+        
+        Implement Sun Class
+        
+        Implement Telescope Class
+        
+        Get Build Working and Cleaned Up
+
+	Short Term:
+        
+        Create an Abstract Class that Sun, Satellite, Telescope,etc. can inherit from.
+        
+		Create Camera Class and Sun Class
+
+		Clean Up the Brightness Calculations and File Writing (Open File Once? or Every time?). Add more parameters: camera sample rate, pass duration, etc...
+
+		Clean Up The Build and Put it on GitHub
+			Make all the include directories reference an environment variable. Then create a batch script that will create the environment variable so someone
+			can just run the script to install COMPASS on their computer. 
+
+		Option for RealTime Rendering (Lock FrameRate and adjust rendering rate vs sample rate)
+
+		Satellite Class:
+			Have a Locked Altitude Variable
+			Clean Up the Move Functionality
+			Create initial Orientation Vector in Satellite Class. Create other Constructors in Satellite Class for easy object Creation.
+			Wrapper values for Satellite node  x y and z?
+
+		Simulation Class:
+			Have an FPS variable and other global simulation parameters. Pass fps variable into satellite update method for updating position.
+
+		Reset Screen Size
+        
+        Render in Monochromatic
+	
+	Long Term:
+
+		Create a System that automatically retrieves the appropriate TLE from the Celestrak database.
+
+		Create Simulation File Format Stuff...
+
+		Implement System for Setting Satellite Location based
+
+		Dynamic Object Scaling to Fit Window
+
+		Look into Rendering off Screen (Is it any Faster?) What about Double or Tripple Buffers? ****************
+		See Here: https://forums.ogre3d.org/viewtopic.php?t=61360
+
+		Performance Optimization
+
+		Identify a satellite based on photometry curve. 
+        
+        SGP4 Integration
+        
+        Spline Curve Generator for Photometry or Object Position (GNU Science Library (GSL))
+        
+        Us the Atmospheric Model that Sergei has (But Backwards) Or look into a better one
+
+
+DESIGN:
+    
+    ** MOVE THIS TO THE SOFTWARE DESIGN DOCUMENT **
+    
+	Store Simulation Data in a File: Mesh Name, TLE, Time, Light Direction, Observer Location, Satellite Paramters
+
+	Have all the information associated with the location of objects in the scene in the Simulation Class
+
+	Satellite Class: 
+	Store information on the angular state of the satellite. Velocity and initial rotation.
+
+	Setup VS InitSim: 
+	Setup is a overridden function from the ApplicationContext class. This function will be called exactly once in order to setup OGRE stuff. The InitSim functino will be
+	called whenever a new simulation needs to run. Here, all Simulation-specific variables are conrigured. Note: Setup is not called by the user. It is handled in OGRE
+
+	Shadows: Currently, Stencil Shadows are used in order to enable Self-Shadow Casting. Stencil is quick and easy, but not as accurate. You can do self-shadow casting with
+	texture shadows, it's just more expensive. See here: https://ogrecave.github.io/ogre/api/1.10/Shadows.html
+
+
+QUESTIONS:
+
+
+
+
+NOTES:
+
+	
+
+RESOURCES:
+
+OGRE Manual: https://ogrecave.github.io/ogre/api/1.10/manual.html
+
+C++ Reference: https://www.tutorialspoint.com/cplusplus/index.htm
+ 
+
+
+
+
+
+
+
